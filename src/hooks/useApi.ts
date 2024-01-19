@@ -22,7 +22,6 @@ export const useApi = () => ({
         return response.data;
     },
     signin: async (email: string, password: string) => {
-        console.log('aLOU?')
         return {
             user: {
                 id: 3,

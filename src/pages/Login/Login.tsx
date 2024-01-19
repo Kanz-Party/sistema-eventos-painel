@@ -1,9 +1,15 @@
-import { useState } from "react";
-import { useContext } from "react";
-import { AuthContext } from "../../contexts/Auth/AuthContext";
-import { useNavigate } from "react-router-dom";
+import React, { useContext, useState } from 'react';
+import './styles';
+import { LoginContainer } from './styles';
+import { useTheme } from '../../contexts/Theme/ThemeContext';
+import { useNavigate } from 'react-router-dom';
+import { AuthContext } from '../../contexts/Auth/AuthContext';
 
-export const Login = () => {
+interface loginProps {
+}
+
+const login: React.FC<loginProps> = ({}) => {
+
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
 
@@ -23,7 +29,7 @@ export const Login = () => {
     }
 
     return (
-        <div>
+        <LoginContainer>
             <h1>Login</h1>
 
             <input type="text" value={email} placeholder="Digite seu email" onChange={(e) => {
@@ -33,6 +39,8 @@ export const Login = () => {
                 setPassword(e.target.value);
             }} />
             <button onClick={handleLogin}>Logar</button>
-        </div>
+        </LoginContainer>
     );
-};
+}
+
+export default login;

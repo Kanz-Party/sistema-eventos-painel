@@ -20,8 +20,6 @@ export const AuthProvider = ({ children }: { children: JSX.Element }) => {
                     setUser(data.user);
                 }
             }
-
-
         }
 
         validateToken();
@@ -30,7 +28,6 @@ export const AuthProvider = ({ children }: { children: JSX.Element }) => {
 
     const signin = async (email: string, password: string) => {
         const data = await api.signin(email, password);
-        window.location.href = window.location.href;
 
         if (data.user && data.token) {
             setUser(data.user);

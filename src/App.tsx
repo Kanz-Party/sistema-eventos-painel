@@ -30,8 +30,16 @@ function App() {
     <div className="App">
       <GlobalStyles theme={theme} />
       <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path='/conta' element={<Conta />} />
+        <Route path="/" element={
+          <RequireAuth>
+            <Home />
+          </RequireAuth>
+        } />
+        <Route path='/conta' element={
+          <RequireAuth>
+            <Conta />
+          </RequireAuth>
+        } />
       </Routes>
       <Paper sx={{ position: 'fixed', bottom: 0, left: 0, right: 0 }} elevation={3}>
           <BottomNavigation

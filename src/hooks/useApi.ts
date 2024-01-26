@@ -2,13 +2,12 @@ import axios from "axios";
 
 
 const api = axios.create({
-    baseURL: process.env.REACT_APP_API,
+    baseURL: 'http://localhost:8080',
 });
 
 
 export const useApi = () => ({
     validateToken: async (token: string) => {
-
         return {
             user: {
                 id: 3,
@@ -16,21 +15,12 @@ export const useApi = () => ({
                 email: ' teste@teste.com',
             }
         }
-
-
         const response = await api.post('/validade', { token });
         return response.data;
     },
-    signin: async (email: string, password: string) => {
-        return {
-            user: {
-                id: 3,
-                name: 'Teste',
-                email: ' teste@teste.com',
-            },
-            token: '123456789'
-        }
-        const response = await api.post('/signin', { email, password });
+    signin: async (email: string, senha: string) => {
+      
+        const response = await api.post('/login', { email, senha });
 
         return response.data;
     },

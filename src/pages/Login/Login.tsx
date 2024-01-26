@@ -1,15 +1,9 @@
 import React, { useContext, useState } from 'react';
-import './styles';
-import { LoginContainer } from './styles';
-import { useTheme } from '../../contexts/Theme/ThemeContext';
+import { Button, TextField, Typography, Container, Paper, Box } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import { AuthContext } from '../../contexts/Auth/AuthContext';
 
-interface loginProps {
-}
-
-const login: React.FC<loginProps> = ({}) => {
-
+const Login: React.FC = () => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
 
@@ -21,7 +15,7 @@ const login: React.FC<loginProps> = ({}) => {
             const isLogged = await auth.signin(email, password);
 
             if(isLogged) {
-                navigate('/')
+                navigate('/');
             } else {
                 alert('Usuário ou senha inválidos');
             }
@@ -29,18 +23,52 @@ const login: React.FC<loginProps> = ({}) => {
     }
 
     return (
-        <LoginContainer>
-            <h1>Login</h1>
-
-            <input type="text" value={email} placeholder="Digite seu email" onChange={(e) => {
-                setEmail(e.target.value);
-            }} />
-            <input type="password" value={password} placeholder="Digite sua senha" onChange={(e) => {
-                setPassword(e.target.value);
-            }} />
-            <button onClick={handleLogin}>Logar</button>
-        </LoginContainer>
+        <Container component="main" maxWidth="xs" sx={{ display: 'flex', flexDirection: 'column', minHeight: '100vh', justifyContent: 'center', alignItems: 'center' }}>
+            <Paper elevation={3} sx={{ padding: 4, display: 'flex', flexDirection: 'column', alignItems: 'center', width: '100%' }}>
+                <Typography component="h1" variant="h5">
+                    Login
+                </Typography>
+                <Box component="form" sx={{ mt: 1, width: '100%' }}>
+                    <TextField
+                        variant="outlined"
+                        margin="normal"
+                        required
+                        fullWidth
+                        id="email"
+                        label="Email Address"
+                        name="email"
+                        autoComplete="email"
+                        autoFocus
+                        value={email}
+                        onChange={(e) => setEmail(e.target.value)}
+                    />
+                    <TextField
+                        variant="outlined"
+                        margin="normal"
+                        required
+                        fullWidth
+                        name="password"
+                        label="Password"
+                        type="password"
+                        id="password"
+                        autoComplete="current-password"
+                        value={password}
+                        onChange={(e) => setPassword(e.target.value)}
+                    />
+                    <Button
+                        type="button"
+                        fullWidth
+                        variant="contained"
+                        color="primary"
+                        sx={{ mt: 3, mb: 2 }}
+                        onClick={handleLogin}
+                    >
+                        Logar
+                    </Button>
+                </Box>
+            </Paper>
+        </Container>
     );
 }
 
-export default login;
+export default Login;

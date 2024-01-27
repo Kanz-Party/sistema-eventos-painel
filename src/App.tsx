@@ -18,7 +18,7 @@ function App() {
   const auth = useContext(AuthContext);
   const [value, setValue] = useState(0);
   const navigate = useNavigate();
-  
+
   const { theme } = useTheme()
 
   const handleLogout = async () => {
@@ -31,9 +31,9 @@ function App() {
       <GlobalStyles theme={theme} />
       <Routes>
         <Route path="/" element={
-          <RequireAuth>
-            <Home />
-          </RequireAuth>
+
+          <Home />
+
         } />
         <Route path='/conta' element={
           <RequireAuth>
@@ -42,17 +42,17 @@ function App() {
         } />
       </Routes>
       <Paper sx={{ position: 'fixed', bottom: 0, left: 0, right: 0 }} elevation={3}>
-          <BottomNavigation
+        <BottomNavigation
           showLabels
           value={value}
           onChange={(event, newValue) => {
-              setValue(newValue);
-              navigate(newValue);
+            setValue(newValue);
+            navigate(newValue);
           }}
-          >
-              <BottomNavigationAction label="Início" icon={<HomeIcon />} value={"/"}/>
-              <BottomNavigationAction label="Conta" icon={<AccountCircleIcon />} value={"/conta"}/>
-          </BottomNavigation>
+        >
+          <BottomNavigationAction label="Início" icon={<HomeIcon />} value={"/"} />
+          <BottomNavigationAction label="Conta" icon={<AccountCircleIcon />} value={"/conta"} />
+        </BottomNavigation>
       </Paper>
     </div>
   );

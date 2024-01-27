@@ -1,8 +1,4 @@
-<<<<<<< Updated upstream
-import React, { useEffect } from 'react';
-=======
-import React, { useState } from 'react';
->>>>>>> Stashed changes
+import React, { useState, useEffect } from 'react';
 import './styles';
 import {
     HomeContainer, Header, LoginButton, LogoStyle, BannerContainer, BannerImage, EventSection,
@@ -11,13 +7,11 @@ import {
     TicketLot, BuyButton, QuantitySelect, QuantityButton, QuantityDisplay, FinalizeButton
 } from './styles';
 import { useTheme } from '../../contexts/Theme/ThemeContext';
-<<<<<<< Updated upstream
 import Typography from '@mui/material/Typography/Typography';
 import { useIngressosApi } from '../../hooks/ingressosApi';
-=======
 import Logo from '../../images/logo.png';
 import Banner from '../../images/banner.jpg';
->>>>>>> Stashed changes
+import LoadingComponent from '../../components/Loading/Loading';
 
 interface Ticket {
     ingresso_id: number;
@@ -34,30 +28,13 @@ interface HomeProps {
 
 const Home: React.FC<HomeProps> = ({ }) => {
 
-<<<<<<< Updated upstream
-    const ingressosApi = useIngressosApi();
-=======
-    const { theme } = useTheme();
->>>>>>> Stashed changes
+    const theme = useTheme();
 
-    const tickets = [
-        {
-            "ingresso_id": 1,
-            "ingresso_descricao": "Pista (Masculino)",
-            "lote_id": 1,
-            "lote_descricao": "Lote Promocional",
-            "lote_preco": "25.00",
-            "lote_quantidade_maxima": 3
-        },
-        {
-            "ingresso_id": 2,
-            "ingresso_descricao": "Pista (Feminino)",
-            "lote_id": 2,
-            "lote_descricao": "Lote Promocional",
-            "lote_preco": "25.00",
-            "lote_quantidade_maxima": 3
-        }
-    ]
+    const ingressosApi = useIngressosApi();
+
+    const [Loading, setLoading] = useState<boolean>(true);
+
+    const [tickets, setTickets] = useState<Ticket[]>([]);
 
     const [selectedTickets, setSelectedTickets] = useState<SelectedTickets>({});
 
@@ -85,15 +62,23 @@ const Home: React.FC<HomeProps> = ({ }) => {
     };
 
     useEffect(() => {
-        ingressosApi.getIngressos();
+        const fetchTickets = async () => {
+            const data = await ingressosApi.getIngressos();
+            setTickets(data);
+        };
+
+        fetchTickets();
+
+        setLoading(false);
     }, []);
 
+    if (Loading) {
+        return <LoadingComponent />
+    }
+
     return (
-<<<<<<< Updated upstream
-        <HomeContainer  theme={theme}>
-            
-=======
         <HomeContainer theme={theme}>
+          
             <Header>
                 <div></div> {/* Espaço vazio para manter o logo centralizado */}
                 <div className="logo">
@@ -109,7 +94,7 @@ const Home: React.FC<HomeProps> = ({ }) => {
             <EventSection>
                 <EventTitle>RAQSA PARTY FIRST EDITION</EventTitle>
                 <EventDetails>09 mar - 2024 • 23:30 </EventDetails>
-                <EventLocation>Evento presencial em Trip bar, Guaporé - RS</EventLocation>
+                <EventLocation>Evento presencial em Trip Bar, Guaporé - RS</EventLocation>
             </EventSection>
             <TicketsContainer>
                 {tickets.map(ticket => (
@@ -125,7 +110,6 @@ const Home: React.FC<HomeProps> = ({ }) => {
                 ))}
                 <FinalizeButton onClick={finalizePurchase}>Finalizar Compra</FinalizeButton>
             </TicketsContainer>
->>>>>>> Stashed changes
         </HomeContainer >
     )
 }

@@ -12,6 +12,7 @@ import { useIngressosApi } from '../../hooks/ingressosApi';
 import Logo from '../../images/logo.png';
 import Banner from '../../images/banner.jpg';
 import LoadingComponent from '../../components/Loading/Loading';
+import { useCarrinhosApi } from '../../hooks/carrinhosApi';
 
 interface Ticket {
     ingresso_id: number;
@@ -19,46 +20,67 @@ interface Ticket {
     lote_descricao: string;
     lote_preco: string;
     lote_quantidade_maxima: number;
+    lote_id: number;
 }
 
-type SelectedTickets = { [key: number]: number };
+interface LoteCarrinho {
+    lote_id: number;
+    lote_quantidade: number;
+}
+
+interface SelectedTickets {
+    carrinho_lotes: LoteCarrinho[];
+}
 
 interface HomeProps {
 }
 
 const Home: React.FC<HomeProps> = ({ }) => {
 
-    const theme = useTheme();
+    const { theme } = useTheme();
 
     const ingressosApi = useIngressosApi();
+    const UseCarrinhosApi = useCarrinhosApi();
 
     const [Loading, setLoading] = useState<boolean>(true);
 
     const [tickets, setTickets] = useState<Ticket[]>([]);
 
-    const [selectedTickets, setSelectedTickets] = useState<SelectedTickets>({});
+    const [selectedTickets, setSelectedTickets] = useState<SelectedTickets>({ carrinho_lotes: [] });
 
-    const handleQuantityChange = (ticketId: number, change: number) => {
-
-        const ticket = tickets.find(ticket => ticket.ingresso_id === ticketId);
+    const handleQuantityChange = (loteId: number, change: number) => {
+        // Encontrar o ticket correspondente ao lote_id
+        const ticket = tickets.find(ticket => ticket.lote_id === loteId);
 
         if (!ticket) {
             return;
         }
 
-        if (selectedTickets[ticketId] + change > ticket.lote_quantidade_maxima) {
-            return;
-        }
+        setSelectedTickets(prev => {
+            const existingLote = prev.carrinho_lotes.find(lote => lote.lote_id === loteId);
+            let newQuantity = (existingLote?.lote_quantidade || 0) + change;
 
-        setSelectedTickets(prev => ({
-            ...prev,
-            [ticketId]: Math.max(0, (prev[ticketId] || 0) + change)
-        }));
+            // Condição para garantir que a quantidade não seja negativa ou exceda o máximo
+            newQuantity = Math.max(0, Math.min(newQuantity, ticket.lote_quantidade_maxima));
+
+            // Se não mudou, retorna o prev para evitar re-renderizações desnecessárias
+            if (newQuantity === (existingLote?.lote_quantidade || 0)) {
+                return prev;
+            }
+
+            const updatedLotes = existingLote
+                ? prev.carrinho_lotes.map(lote =>
+                    lote.lote_id === loteId ? { ...lote, lote_quantidade: newQuantity } : lote)
+                : [...prev.carrinho_lotes, { lote_id: loteId, lote_quantidade: newQuantity }];
+
+            return { carrinho_lotes: updatedLotes };
+        });
     };
 
     const finalizePurchase = () => {
-        console.log("Ingressos comprados:", selectedTickets);
-        // Aqui você pode adicionar lógica adicional para finalizar a compra
+        const response = UseCarrinhosApi.postCarrinho(selectedTickets);
+        console.log(response);
+
     };
 
     useEffect(() => {
@@ -66,6 +88,7 @@ const Home: React.FC<HomeProps> = ({ }) => {
             const data = await ingressosApi.getIngressos();
             setTickets(data);
         };
+        console.log(tickets);
 
         fetchTickets();
 
@@ -78,7 +101,7 @@ const Home: React.FC<HomeProps> = ({ }) => {
 
     return (
         <HomeContainer theme={theme}>
-          
+
             <Header>
                 <div></div> {/* Espaço vazio para manter o logo centralizado */}
                 <div className="logo">
@@ -102,13 +125,15 @@ const Home: React.FC<HomeProps> = ({ }) => {
                         <TicketTitle>{ticket.ingresso_descricao}</TicketTitle>
                         <TicketLot>{ticket.lote_descricao} - R$ {ticket.lote_preco}</TicketLot>
                         <QuantitySelect>
-                            <QuantityButton onClick={() => handleQuantityChange(ticket.ingresso_id, -1)}>-</QuantityButton>
-                            <QuantityDisplay>{selectedTickets[ticket.ingresso_id] || 0}</QuantityDisplay>
-                            <QuantityButton onClick={() => handleQuantityChange(ticket.ingresso_id, 1)}>+</QuantityButton>
+                            <QuantityButton onClick={() => handleQuantityChange(ticket.lote_id, -1)}>-</QuantityButton>
+                            <QuantityDisplay>
+                                {selectedTickets.carrinho_lotes.find(lote => lote.lote_id === ticket.lote_id)?.lote_quantidade || 0}
+                            </QuantityDisplay>
+                            <QuantityButton onClick={() => handleQuantityChange(ticket.lote_id, 1)}>+</QuantityButton>
                         </QuantitySelect>
                     </Ticket>
                 ))}
-                <FinalizeButton onClick={finalizePurchase}>Finalizar Compra</FinalizeButton>
+                <FinalizeButton theme={theme} onClick={finalizePurchase}>Finalizar Compra</FinalizeButton>
             </TicketsContainer>
         </HomeContainer >
     )

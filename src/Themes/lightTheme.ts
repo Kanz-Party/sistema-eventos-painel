@@ -7,7 +7,7 @@ const lightTheme = {
     brandInfo: "#57bdda",
     brandWarning: "#e5c649",
     brandDanger: "#d22e2e ",
-    brandPrimary: "#0D5229",
+    brandPrimary: "#ff6600",
     brandSecondary: "#636466",
     titleColor: "#FF6E28",
     placeholder: "#C7C7C7",

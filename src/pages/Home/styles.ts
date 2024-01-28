@@ -2,6 +2,7 @@ import styled from 'styled-components';
 import { ThemeType } from '../../types/Theme';
 
 const HomeContainer = styled.div<{ theme: ThemeType }>`
+padding-bottom: 50px;
 `;
 
 const Header = styled.div<{ theme: ThemeType }>`
@@ -182,18 +183,16 @@ const QuantityDisplay = styled.span`
   text-align: center;
 `;
 
-const FinalizeButton = styled.button`
+const FinalizeButton = styled.button<{ theme: ThemeType }>`
   width: 100%;
   padding: 10px;
-  background-color: #28a745;
+  background-color: ${props => props.theme.colors.brandPrimary};
   color: white;
   border: none;
   border-radius: 5px;
   cursor: pointer;
 
-  &:hover {
-    background-color: #218838;
-  }
+ 
 `;
 
 

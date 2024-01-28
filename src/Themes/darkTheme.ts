@@ -7,7 +7,7 @@ const darkTheme = {
     brandInfo: "#57bdda",
     brandWarning: "#e5c649",
     brandDanger: "#ed7878",
-    brandPrimary: "#36945C",
+    brandPrimary: "#ff6600",
     brandSecondary: "#E1E1E1",
     titleColor: "#FF6E28",
     placeholder: "#939090",

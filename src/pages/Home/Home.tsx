@@ -13,6 +13,7 @@ import Logo from '../../images/logo.png';
 import Banner from '../../images/banner.jpg';
 import LoadingComponent from '../../components/Loading/Loading';
 import { useCarrinhosApi } from '../../hooks/carrinhosApi';
+import Timer from '../../components/Timer/Timer';
 
 interface Ticket {
     ingresso_id: number;
@@ -41,6 +42,9 @@ const Home: React.FC<HomeProps> = ({ }) => {
 
     const ingressosApi = useIngressosApi();
     const UseCarrinhosApi = useCarrinhosApi();
+
+    const [timerLimit, setTimerLimit] = useState<any>();
+    const [timer, setTimer] = useState<any>();
 
     const [Loading, setLoading] = useState<boolean>(true);
 
@@ -95,40 +99,6 @@ const Home: React.FC<HomeProps> = ({ }) => {
 
                 const { carrinho_lotes } = carrinho;
 
-                /*           
-                "carrinho_lotes": [
-                    {
-                        "lote_id": 3,
-                        "lote_quantidade": 1
-                    },
-                    {
-                        "lote_id": 4,
-                        "lote_quantidade": 1
-                    }
-                ]
-            } */
-
-                /* [
-                    {
-                        "ingresso_id": 1,
-                        "ingresso_descricao": "Pista (Masculino)",
-                        "lote_id": 3,
-                        "lote_descricao": "1º Lote",
-                        "lote_preco": 3000,
-                        "lote_quantidade": 2
-                    },
-                    {
-                        "ingresso_id": 2,
-                        "ingresso_descricao": "Pista (Feminino)",
-                        "lote_id": 4,
-                        "lote_descricao": "1º Lote",
-                        "lote_preco": 3000,
-                        "lote_quantidade": 2
-                    }
-                ] */
-
-                //find carrinho_lotes by lote_id
-
                 const carrinhoLotes = carrinho_lotes.map((carrinhoLote: any) => {
                     const ticket = data.find((ticket: any) => ticket.lote_id === carrinhoLote.lote_id);
                     return {
@@ -136,6 +106,11 @@ const Home: React.FC<HomeProps> = ({ }) => {
                         lote_quantidade: carrinhoLote.lote_quantidade
                     }
                 });
+
+
+
+                setTimerLimit(carrinho.carrinho_expiracao);
+                setTimer(carrinho.data_atual);
 
                 setSelectedTickets({ carrinho_lotes: carrinhoLotes });
 
@@ -156,6 +131,9 @@ const Home: React.FC<HomeProps> = ({ }) => {
 
     return (
         <HomeContainer theme={theme}>
+         {
+            timerLimit && timer ? <Timer expirationDate={timerLimit}  /> : null
+         }
 
             <Header>
                 <div></div> {/* Espaço vazio para manter o logo centralizado */}

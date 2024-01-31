@@ -12,10 +12,13 @@ type Carrinho = {
     carrinho_lotes: LoteCarrinho[];
 };
 
-export const useCarrinhosApi = () => ({
-    postCarrinho: async ({carrinho_lotes}: Carrinho) => {
+type getCarrinho = {
+    hash: string;
+};
 
-        console.log(carrinho_lotes);
+export const useCarrinhosApi = () => ({
+    postCarrinho: async ({ carrinho_lotes }: Carrinho) => {
+
 
         let carrinhos_lotes = carrinho_lotes.map((lote) => {
             return {
@@ -24,9 +27,12 @@ export const useCarrinhosApi = () => ({
             };
         });
 
-        const response = await api.post('/carrinhos', {carrinho_lotes : carrinho_lotes});
+        const response = await api.post('/carrinhos', { carrinho_lotes: carrinho_lotes });
 
-        console.log(response.data);
         return response.data;
     },
+    getCarrinho: async (carrinho_hash: any) => {
+        const response = await api.get(`/carrinhos/${carrinho_hash}`);
+        return response.data;
+    }
 });

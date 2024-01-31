@@ -77,9 +77,9 @@ const Home: React.FC<HomeProps> = ({ }) => {
         });
     };
 
-    const finalizePurchase = () => {
-        const response = UseCarrinhosApi.postCarrinho(selectedTickets);
-        console.log(response);
+    const finalizePurchase = async () => {
+        const response = await UseCarrinhosApi.postCarrinho(selectedTickets) as any;
+        localStorage.setItem('carrinho', response.carrinho_hash);
 
     };
 
@@ -87,8 +87,63 @@ const Home: React.FC<HomeProps> = ({ }) => {
         const fetchTickets = async () => {
             const data = await ingressosApi.getIngressos();
             setTickets(data);
+
+            const getCarrinhoStorage = localStorage.getItem('carrinho');
+
+            if (getCarrinhoStorage) {
+                const carrinho = await UseCarrinhosApi.getCarrinho(getCarrinhoStorage);
+
+                const { carrinho_lotes } = carrinho;
+
+                /*           
+                "carrinho_lotes": [
+                    {
+                        "lote_id": 3,
+                        "lote_quantidade": 1
+                    },
+                    {
+                        "lote_id": 4,
+                        "lote_quantidade": 1
+                    }
+                ]
+            } */
+
+                /* [
+                    {
+                        "ingresso_id": 1,
+                        "ingresso_descricao": "Pista (Masculino)",
+                        "lote_id": 3,
+                        "lote_descricao": "1º Lote",
+                        "lote_preco": 3000,
+                        "lote_quantidade": 2
+                    },
+                    {
+                        "ingresso_id": 2,
+                        "ingresso_descricao": "Pista (Feminino)",
+                        "lote_id": 4,
+                        "lote_descricao": "1º Lote",
+                        "lote_preco": 3000,
+                        "lote_quantidade": 2
+                    }
+                ] */
+
+                //find carrinho_lotes by lote_id
+
+                const carrinhoLotes = carrinho_lotes.map((carrinhoLote: any) => {
+                    const ticket = data.find((ticket: any) => ticket.lote_id === carrinhoLote.lote_id);
+                    return {
+                        ...ticket,
+                        lote_quantidade: carrinhoLote.lote_quantidade
+                    }
+                });
+
+                setSelectedTickets({ carrinho_lotes: carrinhoLotes });
+
+
+            }
+
+
         };
-        console.log(tickets);
 
         fetchTickets();
 

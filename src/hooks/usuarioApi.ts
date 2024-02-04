@@ -1,0 +1,15 @@
+import { api } from "./useApi";
+
+export const criarUsuario = async (usuario: any) => {
+    const response = await api.post('/usuarios/login', usuario);
+
+    return response.data;
+}
+
+export const verificaToken = async (token: string) => {
+    const response = await api.get('/usuarios/verifica-token', {
+        headers: {
+            Authorization: `Bearer ${token}`
+        }
+    });
+}

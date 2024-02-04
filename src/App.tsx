@@ -11,6 +11,8 @@ import { BottomNavigation, BottomNavigationAction, Paper } from '@mui/material';
 import HomeIcon from '@mui/icons-material/Home';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import Conta from './pages/Conta/Conta';
+import Cadastro from './pages/Cadastro/Cadastro';
+import MercadoPago from './pages/MercadoPago/MercadoPago';
 
 
 function App() {
@@ -33,12 +35,16 @@ function App() {
         <Route path="/" element={
 
           <Home />
+        
 
         } />
         <Route path='/conta' element={
           <RequireAuth>
             <Conta />
           </RequireAuth>
+        } />
+        <Route path='/cadastro' element={
+          <Cadastro />
         } />
       </Routes>
       <Paper sx={{ position: 'fixed', bottom: 0, left: 0, right: 0 }} elevation={3}>

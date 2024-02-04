@@ -14,6 +14,7 @@ import Banner from '../../images/banner.jpg';
 import LoadingComponent from '../../components/Loading/Loading';
 import { useCarrinhosApi } from '../../hooks/carrinhosApi';
 import Timer from '../../components/Timer/Timer';
+import { useNavigate } from 'react-router-dom';
 
 interface Ticket {
     ingresso_id: number;
@@ -39,6 +40,8 @@ interface HomeProps {
 const Home: React.FC<HomeProps> = ({ }) => {
 
     const { theme } = useTheme();
+
+    const navigate = useNavigate();
 
     const ingressosApi = useIngressosApi();
     const UseCarrinhosApi = useCarrinhosApi();
@@ -84,6 +87,8 @@ const Home: React.FC<HomeProps> = ({ }) => {
     const finalizePurchase = async () => {
         const response = await UseCarrinhosApi.postCarrinho(selectedTickets) as any;
         localStorage.setItem('carrinho', response.carrinho_hash);
+
+        navigate('/cadastro');
 
     };
 
@@ -148,7 +153,7 @@ const Home: React.FC<HomeProps> = ({ }) => {
                 <BannerImage src={Banner} alt="Banner" />
             </BannerContainer>
             <EventSection>
-                <EventTitle>RAQSA PARTY FIRST EDITION</EventTitle>
+                <EventTitle>Kanz PARTY FIRST EDITION</EventTitle>
                 <EventDetails>09 mar - 2024 • 23:30 </EventDetails>
                 <EventLocation>Evento presencial em Trip Bar, Guaporé - RS</EventLocation>
             </EventSection>

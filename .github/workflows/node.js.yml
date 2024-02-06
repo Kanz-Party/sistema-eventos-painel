@@ -1,36 +1,35 @@
-name: Deploy to FTP
+
+name: Node.js CI
 
 on:
   push:
-    branches:
-      - main
+    branches: [ main ]
 
 jobs:
-  build-and-deploy:
+  build:
+
     runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [12.x]
+        # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
 
     steps:
     - uses: actions/checkout@v2
-    
-    - name: Setup Node.js
+    - name: Use Node.js ${{ matrix.node-version }}
       uses: actions/setup-node@v2
       with:
-        node-version: '21' # Ajuste conforme a versão desejada para o seu projeto
-
-    - name: Install Yarn
-      run: npm install -g yarn # Instala o Yarn globalmente
-
-    - name: Install dependencies
-      run: yarn install # Usa Yarn para instalar as dependências
-
-    - name: Build
-      run: yarn build # Usa Yarn para construir o projeto
-
-    - name: Upload to FTP
-      uses: SamKirkland/FTP-Deploy-Action@4.0.0
-      with:
-        server: ftp.kanzparty.com.br
-        username: ${{ secrets.FTP_USERNAME }}
-        password: ${{ secrets.FTP_PASSWORD }}
-        local-dir: ./build/
-        server-dir: ./
+        node-version: ${{ matrix.node-version }}
+        cache: 'npm'
+    - run: npm install
+    - run: npm run build
+    - name: 📂 Sync files
+      uses: SamKirkland/FTP-Deploy-Action@4.2.0
+      with: 
+       local-dir: ./build/
+       server-dir: ./
+       server: ftp.kanzparty.com.br
+       username: ${{ secrets.FTP_USERNAME }}
+       password: ${{ secrets.FTP_PASSWORD }}
+       run: sudo cp -R build/*/var/www

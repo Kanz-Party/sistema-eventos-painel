@@ -24,13 +24,11 @@ export const useApi = () => ({
     validateToken: async (token: string) => {
         const response = await api.post('/usuarios/verifica_sessao');
 
-        console.log(response.data);
-
         return response.data;
     },
     signin: async (email: string, senha: string) => {
 
-        const response = await api.post('/login', { email, senha });
+        const response = await api.post('/usuarios/login', { email, senha });
 
         return response.data;
     },

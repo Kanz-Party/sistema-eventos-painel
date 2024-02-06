@@ -2,6 +2,7 @@ import React, { useContext, useState } from 'react';
 import { Button, TextField, Typography, Container, Paper, Box } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import { AuthContext } from '../../contexts/Auth/AuthContext';
+import Swal from 'sweetalert2';
 
 const Login: React.FC = () => {
     const [email, setEmail] = useState("");
@@ -11,14 +12,30 @@ const Login: React.FC = () => {
     const navigate = useNavigate();
 
     const handleLogin = async () => {
-        if (email && password) {
-            const isLogged = await auth.signin(email, password);
 
-            if(isLogged) {
-                navigate('/');
-            } else {
-                alert('Usuário ou senha inválidos');
-            }
+        if (email && password) {
+            auth.signin(email, password).then((res) => {
+
+                localStorage.setItem('token', res.token);
+                Swal.fire({
+                    title: 'Sucesso!',
+                    text: 'Usuário logado com sucesso',
+                    icon: 'success',
+                    confirmButtonText: 'OK'
+                }).then(() => {
+                    navigate('/');
+                });
+
+            }).catch((error) => {
+                Swal.fire({
+                    title: 'Erro!',
+                    text: error.response.data.message,
+                    icon: 'error',
+                    confirmButtonText: 'OK'
+                });
+            });
+
+
         }
     }
 

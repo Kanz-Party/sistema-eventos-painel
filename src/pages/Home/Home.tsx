@@ -91,44 +91,39 @@ const Home: React.FC<HomeProps> = ({ }) => {
         navigate('/cadastro');
 
     };
-
     useEffect(() => {
         const fetchTickets = async () => {
             const data = await ingressosApi.getIngressos();
             setTickets(data);
-
+    
             const getCarrinhoStorage = localStorage.getItem('carrinho');
-
+    
             if (getCarrinhoStorage) {
                 const carrinho = await UseCarrinhosApi.getCarrinho(getCarrinhoStorage);
-
+    
                 const { carrinho_lotes } = carrinho;
-
+    
                 const carrinhoLotes = carrinho_lotes.map((carrinhoLote: any) => {
                     const ticket = data.find((ticket: any) => ticket.lote_id === carrinhoLote.lote_id);
                     return {
                         ...ticket,
                         lote_quantidade: carrinhoLote.lote_quantidade
-                    }
+                    };
                 });
-
-
-
+    
                 setTimerLimit(carrinho.carrinho_expiracao);
                 setTimer(carrinho.data_atual);
-
                 setSelectedTickets({ carrinho_lotes: carrinhoLotes });
-
-
             }
-
-
         };
-
+    
         fetchTickets();
-
+    
         setLoading(false);
-    }, []);
+    
+        // Adding ingressosApi and UseCarrinhosApi to the dependency array
+    }, [ingressosApi, UseCarrinhosApi]);
+    
 
     if (Loading) {
         return <LoadingComponent />

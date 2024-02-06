@@ -32,5 +32,5 @@ jobs:
         server: ftp.kanzparty.com.br
         username: ${{ secrets.FTP_USERNAME }}
         password: ${{ secrets.FTP_PASSWORD }}
-        server-dir: / # Usando a raiz do servidor FTP
-        local-dir: build/
+        local-dir: ./build/
+        server-dir: ./

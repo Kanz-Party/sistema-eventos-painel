@@ -31,7 +31,7 @@ interface LoteCarrinho {
 }
 
 interface SelectedTickets {
-    carrinho_lotes: LoteCarrinho[];
+    carrinho_lotes: LoteCarrinho[]; 
 }
 
 

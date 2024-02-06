@@ -8,7 +8,7 @@ const isLocalhost =
 // Definir baseURL dependendo do ambiente
 const baseURL = isLocalhost
     ? "http://localhost:8080/api/"
-    : "?";
+    : "https://kanzparty.com.br/api/";
 
 const api = axios.create({
     baseURL: baseURL,

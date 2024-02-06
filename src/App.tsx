@@ -1,32 +1,24 @@
 
-import { Routes, Route, Link, useNavigate } from 'react-router-dom';
+import { Routes, Route,  useNavigate } from 'react-router-dom';
 import { RequireAuth } from './contexts/Auth/RequireAuth';
-import { useContext, useEffect, useState } from 'react';
-import { AuthContext } from './contexts/Auth/AuthContext';
+import {  useState } from 'react';
 import Home from './pages/Home/Home';
 import GlobalStyles from './app_styles';
-import { ThemeContext } from 'styled-components';
 import { useTheme } from './contexts/Theme/ThemeContext';
 import { BottomNavigation, BottomNavigationAction, Paper } from '@mui/material';
 import HomeIcon from '@mui/icons-material/Home';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import Conta from './pages/Conta/Conta';
 import Cadastro from './pages/Cadastro/Cadastro';
-import MercadoPago from './pages/MercadoPago/MercadoPago';
 
 
 function App() {
 
-  const auth = useContext(AuthContext);
   const [value, setValue] = useState(0);
   const navigate = useNavigate();
 
   const { theme } = useTheme()
 
-  const handleLogout = async () => {
-    await auth.signout();
-    window.location.href = window.location.href;
-  }
 
   return (
     <div className="App">

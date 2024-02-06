@@ -23,7 +23,7 @@ export const AuthProvider = ({ children }: { children: JSX.Element }) => {
         }
 
         validateToken();
-    }, []);
+    }, [api]);
 
 
     const signin = async (email: string, password: string) => {

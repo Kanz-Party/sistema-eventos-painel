@@ -12,4 +12,5 @@ export const verificaToken = async (token: string) => {
             Authorization: `Bearer ${token}`
         }
     });
+    return response.data;
 }

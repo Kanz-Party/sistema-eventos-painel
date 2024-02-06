@@ -3,11 +3,11 @@ import './styles';
 import {
     HomeContainer, Header, LoginButton, LogoStyle, BannerContainer, BannerImage, EventSection,
     EventTitle, EventDetails, EventLocation, TicketsContainer, Ticket,
-    TicketTitle, TicketPrice, TicketInfo, PromoCodeInput, SelectTicketButton,
-    TicketLot, BuyButton, QuantitySelect, QuantityButton, QuantityDisplay, FinalizeButton
+    TicketTitle,
+    TicketLot, QuantitySelect, QuantityButton, QuantityDisplay, FinalizeButton
 } from './styles';
 import { useTheme } from '../../contexts/Theme/ThemeContext';
-import Typography from '@mui/material/Typography/Typography';
+
 import { useIngressosApi } from '../../hooks/ingressosApi';
 import Logo from '../../images/logo.png';
 import Banner from '../../images/banner.jpg';
@@ -16,7 +16,7 @@ import { useCarrinhosApi } from '../../hooks/carrinhosApi';
 import Timer from '../../components/Timer/Timer';
 import { useNavigate } from 'react-router-dom';
 
-interface Ticket {
+interface TicketData {
     ingresso_id: number;
     ingresso_descricao: string;
     lote_descricao: string;
@@ -34,10 +34,8 @@ interface SelectedTickets {
     carrinho_lotes: LoteCarrinho[];
 }
 
-interface HomeProps {
-}
 
-const Home: React.FC<HomeProps> = ({ }) => {
+const Home: React.FC = () => {
 
     const { theme } = useTheme();
 
@@ -51,7 +49,7 @@ const Home: React.FC<HomeProps> = ({ }) => {
 
     const [Loading, setLoading] = useState<boolean>(true);
 
-    const [tickets, setTickets] = useState<Ticket[]>([]);
+    const [tickets, setTickets] = useState<TicketData[]>([]);
 
     const [selectedTickets, setSelectedTickets] = useState<SelectedTickets>({ carrinho_lotes: [] });
 

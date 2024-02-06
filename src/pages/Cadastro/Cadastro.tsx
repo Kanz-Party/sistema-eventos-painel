@@ -3,7 +3,6 @@ import { useForm, SubmitHandler, Controller } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 import { Button, TextField, Typography, Container, Paper, Box } from '@mui/material';
-import { useNavigate } from 'react-router-dom';
 import InputMask from 'react-input-mask';
 import { criarUsuario } from '../../hooks/usuarioApi';
 import Swal from 'sweetalert2';
@@ -24,7 +23,6 @@ const schema = z.object({
 type CadastroFormData = z.infer<typeof schema>;
 
 const Cadastro: React.FC = () => {
-    const navigate = useNavigate();
     const { control, handleSubmit, formState: { errors } } = useForm<CadastroFormData>({
         resolver: zodResolver(schema),
     });

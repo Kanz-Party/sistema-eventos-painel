@@ -3,16 +3,15 @@ import './styles';
 import { ContaContainer } from './styles';
 import { useTheme } from '../../contexts/Theme/ThemeContext';
 
-interface ContaProps {
-}
 
-const Conta: React.FC<ContaProps> = ({}) => {
+
+const Conta: React.FC = () => {
 
    const {theme} = useTheme();
 
     return (
         <ContaContainer  theme={theme}>
-            
+            <>Conta</>
         </ContaContainer >
     )
 }

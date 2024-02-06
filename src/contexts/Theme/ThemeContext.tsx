@@ -8,7 +8,7 @@ import React, {
 } from "react";
 import lightTheme from "../../Themes/lightTheme";
 import darkTheme from "../../Themes/darkTheme";
-import { ThemeType, ThemeContextType } from "../../types/Theme";
+import {  ThemeContextType } from "../../types/Theme";
 
 interface ThemeProviderProps {
   children: ReactNode;

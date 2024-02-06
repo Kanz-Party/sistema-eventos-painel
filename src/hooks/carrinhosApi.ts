@@ -12,20 +12,12 @@ type Carrinho = {
     carrinho_lotes: LoteCarrinho[];
 };
 
-type getCarrinho = {
-    hash: string;
-};
+
 
 export const useCarrinhosApi = () => ({
     postCarrinho: async ({ carrinho_lotes }: Carrinho) => {
 
 
-        let carrinhos_lotes = carrinho_lotes.map((lote) => {
-            return {
-                lote_id: lote.lote_id,
-                lote_quantidade: lote.lote_quantidade,
-            };
-        });
 
         const response = await api.post('/carrinhos', { carrinho_lotes: carrinho_lotes });
 

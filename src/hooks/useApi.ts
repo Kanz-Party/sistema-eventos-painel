@@ -39,9 +39,6 @@ export const useApi = () => ({
             status: true
         }
 
-
-        const response = await api.post('/logout');
-        return response.data;
     }
 })
 

@@ -9,10 +9,7 @@ import Swal from 'sweetalert2';
 
 // Definição do esquema de validação com Zod
 const schema = z.object({
-    nome: z.string().min(1, 'Nome é obrigatório'),
     email: z.string().email('E-mail inválido'),
-    cpf: z.string().min(14, 'CPF é obrigatório').refine((val) => val.replace(/\D/g, '').length === 11, 'CPF deve ter 11 dígitos'),
-    telefone: z.string().min(1, 'Telefone é obrigatório').refine((val) => val.replace(/\D/g, '').length === 11, 'Telefone deve ter 11 dígitos'),
     senha: z.string().min(6, 'Senha deve ter no mínimo 6 caracteres'),
     confirmacaoSenha: z.string(),
 }).refine((data) => data.senha === data.confirmacaoSenha, {
@@ -38,7 +35,7 @@ const Cadastro: React.FC = () => {
                 }).then(() => {
                     console.log(res);
                     localStorage.setItem('token', res.token);
-                  
+                    window.location.href = '/';
                 });
             })
             .catch((error) => {
@@ -59,24 +56,7 @@ const Cadastro: React.FC = () => {
                     Cadastro
                 </Typography>
                 <Box component="form" noValidate onSubmit={handleSubmit(onSubmit)} sx={{ mt: 1 }}>
-                    <Controller
-                        name="nome"
-                        control={control}
-                        defaultValue=""
-                        render={({ field }) => (
-                            <TextField
-                                {...field}
-                                variant="outlined"
-                                margin="normal"
-                                required
-                                fullWidth
-                                label="Nome"
-                                autoFocus
-                                error={!!errors.nome}
-                                helperText={errors.nome?.message}
-                            />
-                        )}
-                    />
+                  
                     <Controller
                         name="email"
                         control={control}
@@ -94,48 +74,7 @@ const Cadastro: React.FC = () => {
                             />
                         )}
                     />
-                     <Controller
-                        name="cpf"
-                        control={control}
-                        defaultValue=""
-                        render={({ field }) => (
-                            <InputMask mask="999.999.999-99" value={field.value} onChange={field.onChange}>
-                                {(inputProps: any) => (
-                                    <TextField
-                                        {...inputProps}
-                                        variant="outlined"
-                                        margin="normal"
-                                        required
-                                        fullWidth
-                                        label="CPF"
-                                        error={!!errors.cpf}
-                                        helperText={errors.cpf?.message}
-                                    />
-                                )}
-                            </InputMask>
-                        )}
-                    />
-                    <Controller
-                        name="telefone"
-                        control={control}
-                        defaultValue=""
-                        render={({ field }) => (
-                            <InputMask mask="(99) 99999-9999" value={field.value} onChange={field.onChange}>
-                                {(inputProps: any) => (
-                                    <TextField
-                                        {...inputProps}
-                                        variant="outlined"
-                                        margin="normal"
-                                        required
-                                        fullWidth
-                                        label="Telefone"
-                                        error={!!errors.telefone}
-                                        helperText={errors.telefone?.message}
-                                    />
-                                )}
-                            </InputMask>
-                        )}
-                    />
+             
                     <Controller
                         name="senha"
                         control={control}

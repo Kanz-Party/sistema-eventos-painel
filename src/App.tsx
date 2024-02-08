@@ -1,7 +1,7 @@
 
-import { Routes, Route,  useNavigate } from 'react-router-dom';
+import { Routes, Route, useNavigate } from 'react-router-dom';
 import { RequireAuth } from './contexts/Auth/RequireAuth';
-import {  useState } from 'react';
+import { useState } from 'react';
 import Home from './pages/Home/Home';
 import GlobalStyles from './app_styles';
 import { useTheme } from './contexts/Theme/ThemeContext';
@@ -9,7 +9,7 @@ import { BottomNavigation, BottomNavigationAction, Paper } from '@mui/material';
 import HomeIcon from '@mui/icons-material/Home';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import Conta from './pages/Conta/Conta';
-import Cadastro from './pages/Cadastro/Cadastro';
+import Finalizar from './pages/Finalizar/Finalizar';
 
 
 function App() {
@@ -32,8 +32,8 @@ function App() {
             <Conta />
           </RequireAuth>
         } />
-        <Route path='/cadastro' element={
-          <Cadastro />
+        <Route path='/finalizar' element={
+          <Finalizar />
         } />
       </Routes>
       <Paper sx={{ position: 'fixed', bottom: 0, left: 0, right: 0 }} elevation={3}>

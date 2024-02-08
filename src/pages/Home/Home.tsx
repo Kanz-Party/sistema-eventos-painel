@@ -47,7 +47,7 @@ const Home: React.FC = () => {
     const [timerLimit, setTimerLimit] = useState<any>();
     const [timer, setTimer] = useState<any>();
 
-    const [Loading, setLoading] = useState<boolean>(true);
+    const [Loading, setLoading] = useState<boolean>(false);
 
     const [tickets, setTickets] = useState<TicketData[]>([]);
 
@@ -86,17 +86,21 @@ const Home: React.FC = () => {
         const response = await UseCarrinhosApi.postCarrinho(selectedTickets) as any;
         localStorage.setItem('carrinho', response.carrinho_hash);
 
-        navigate('/cadastro');
+        navigate('/finalizar');
 
     };
     useEffect(() => {
         const fetchTickets = async () => {
+            setLoading(true); // Set loading to true before fetching data
+    
             const data = await ingressosApi.getIngressos();
             setTickets(data);
     
             const getCarrinhoStorage = localStorage.getItem('carrinho');
     
             if (getCarrinhoStorage) {
+
+                setLoading(false);
                 const carrinho = await UseCarrinhosApi.getCarrinho(getCarrinhoStorage);
     
                 const { carrinho_lotes } = carrinho;
@@ -112,15 +116,17 @@ const Home: React.FC = () => {
                 setTimerLimit(carrinho.carrinho_expiracao);
                 setTimer(carrinho.data_atual);
                 setSelectedTickets({ carrinho_lotes: carrinhoLotes });
+            }else{
+                setLoading(false);
             }
+
         };
     
         fetchTickets();
     
-        setLoading(false);
+        // No dependencies in the dependency array to prevent infinite loop
+    }, []);
     
-        // Adding ingressosApi and UseCarrinhosApi to the dependency array
-    }, [ingressosApi, UseCarrinhosApi]);
     
 
     if (Loading) {

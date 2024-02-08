@@ -6,7 +6,7 @@ export const RequireAuth = ({ children }: { children: JSX.Element }) => {
 
     const auth = useContext(AuthContext);
 
-    if (!auth.user) {
+    if (!auth.logado) {
         return <Login />
     }
 

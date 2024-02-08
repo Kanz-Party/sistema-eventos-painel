@@ -2,10 +2,12 @@ import { AuthContext } from "./AuthContext";
 import { useState, useEffect } from "react";
 import { User } from "../../types/User";
 import { useApi } from "../../hooks/useApi";
+import { set } from "react-hook-form";
 
 
 export const AuthProvider = ({ children }: { children: JSX.Element }) => {
-    const [user, setUser] = useState<User | null>(null);
+    const [user, setUser] = useState<any>(null);
+    const [logado, setLogado] = useState<boolean>(false);
     const api = useApi();
 
     useEffect(() => {
@@ -15,22 +17,20 @@ export const AuthProvider = ({ children }: { children: JSX.Element }) => {
 
             if (token) {
                 const data = await api.validateToken(token);
-
-                if (data.user) {
-                    setUser(data.user);
+                if (data.estaLogado) {
+                    setLogado(true);
                 }
             }
         }
 
         validateToken();
     }, [api]);
+    
 
 
     const signin = async (email: string, password: string) => {
         const data = await api.signin(email, password);
-
-       
-
+        setUser(data.usuario);
         return data;
     }
 
@@ -50,7 +50,7 @@ export const AuthProvider = ({ children }: { children: JSX.Element }) => {
     }
 
     return (
-        <AuthContext.Provider value={{ user, signin, signout }}>
+        <AuthContext.Provider value={{ user, signin, signout, logado }}>
             {children}
         </AuthContext.Provider>
     );

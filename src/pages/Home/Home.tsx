@@ -9,8 +9,8 @@ import {
 import { useTheme } from '../../contexts/Theme/ThemeContext';
 
 import { useIngressosApi } from '../../hooks/ingressosApi';
-import Logo from '../../images/logo.png';
-import Banner from '../../images/banner.jpg';
+import Logo from '../../assets/images/logo.png';
+import Banner from '../../assets/images/banner.jpg';
 import LoadingComponent from '../../components/Loading/Loading';
 import { useCarrinhosApi } from '../../hooks/carrinhosApi';
 import Timer from '../../components/Timer/Timer';

@@ -15,16 +15,26 @@ jobs:
     - name: Setup Node.js
       uses: actions/setup-node@v2
       with:
-        node-version: '21' # Ajuste conforme a versão desejada para o seu projeto
+        node-version: '21' # Adjust according to the desired version for your project
 
     - name: Install Yarn
-      run: npm install -g yarn # Instala o Yarn globalmente
+      run: npm install -g yarn # Installs Yarn globally
 
     - name: Install dependencies
-      run: yarn install # Usa Yarn para instalar as dependências
+      run: yarn install # Uses Yarn to install dependencies
 
     - name: Build
-      run: yarn build # Usa Yarn para construir o projeto
+      run: yarn build # Uses Yarn to build the project
+      continue-on-error: true # Allows the next step to check for warnings even if this step has warnings
+
+    - name: Check for warnings
+      run: |
+        if grep -q "Warning:" ./path/to/your/build/logs.txt; then
+          echo "Build warnings found, failing the workflow."
+          exit 1
+        fi
+      # Note: You'll need to adjust "./path/to/your/build/logs.txt" to the actual path of your build logs.
+      # This step assumes that your build process outputs logs to a file. If not, you might need a different approach to capture and check the build output.
 
     - name: Upload to FTP
       uses: SamKirkland/FTP-Deploy-Action@4.0.0

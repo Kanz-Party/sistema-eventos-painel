@@ -39,6 +39,7 @@ const Cadastro: React.FC = () => {
                 });
             })
             .catch((error) => {
+                console.log(error);
                 Swal.fire({
                     title: 'Erro!',
                     text: error.response.data.message,

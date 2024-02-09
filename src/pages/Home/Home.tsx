@@ -15,23 +15,16 @@ import LoadingComponent from '../../components/Loading/Loading';
 import { useCarrinhosApi } from '../../hooks/carrinhosApi';
 import Timer from '../../components/Timer/Timer';
 import { useNavigate } from 'react-router-dom';
+import { useCarrinhos } from '../../contexts/Carrinhos/CarrinhosProvider';
+import { CarrinhosContext } from '../../contexts/Carrinhos/CarrinhosProvider';
 
 interface TicketData {
     ingresso_id: number;
+    lote_id: number;
     ingresso_descricao: string;
     lote_descricao: string;
-    lote_preco: string;
+    lote_preco: number;
     lote_quantidade_maxima: number;
-    lote_id: number;
-}
-
-interface LoteCarrinho {
-    lote_id: number;
-    lote_quantidade: number;
-}
-
-interface SelectedTickets {
-    carrinho_lotes: LoteCarrinho[]; 
 }
 
 
@@ -42,103 +35,26 @@ const Home: React.FC = () => {
     const navigate = useNavigate();
 
     const ingressosApi = useIngressosApi();
-    const UseCarrinhosApi = useCarrinhosApi();
-
-    const [timerLimit, setTimerLimit] = useState<any>();
-    const [timer, setTimer] = useState<any>();
-
-    const [Loading, setLoading] = useState<boolean>(false);
-
+    const { selectedTickets, handleQuantityChange, finalizePurchase, loading, setLoading } = useCarrinhos();
     const [tickets, setTickets] = useState<TicketData[]>([]);
 
-    const [selectedTickets, setSelectedTickets] = useState<SelectedTickets>({ carrinho_lotes: [] });
 
-    const handleQuantityChange = (loteId: number, change: number) => {
-        // Encontrar o ticket correspondente ao lote_id
-        const ticket = tickets.find(ticket => ticket.lote_id === loteId);
-
-        if (!ticket) {
-            return;
-        }
-
-        setSelectedTickets(prev => {
-            const existingLote = prev.carrinho_lotes.find(lote => lote.lote_id === loteId);
-            let newQuantity = (existingLote?.lote_quantidade || 0) + change;
-
-            // Condição para garantir que a quantidade não seja negativa ou exceda o máximo
-            newQuantity = Math.max(0, Math.min(newQuantity, ticket.lote_quantidade_maxima));
-
-            // Se não mudou, retorna o prev para evitar re-renderizações desnecessárias
-            if (newQuantity === (existingLote?.lote_quantidade || 0)) {
-                return prev;
-            }
-
-            const updatedLotes = existingLote
-                ? prev.carrinho_lotes.map(lote =>
-                    lote.lote_id === loteId ? { ...lote, lote_quantidade: newQuantity } : lote)
-                : [...prev.carrinho_lotes, { lote_id: loteId, lote_quantidade: newQuantity }];
-
-            return { carrinho_lotes: updatedLotes };
-        });
-    };
-
-    const finalizePurchase = async () => {
-        const response = await UseCarrinhosApi.postCarrinho(selectedTickets) as any;
-        localStorage.setItem('carrinho', response.carrinho_hash);
-
-        navigate('/finalizar');
-
-    };
     useEffect(() => {
         const fetchTickets = async () => {
-            setLoading(true); // Set loading to true before fetching data
-    
             const data = await ingressosApi.getIngressos();
             setTickets(data);
-    
-            const getCarrinhoStorage = localStorage.getItem('carrinho');
-    
-            if (getCarrinhoStorage) {
-
-                setLoading(false);
-                const carrinho = await UseCarrinhosApi.getCarrinho(getCarrinhoStorage);
-    
-                const { carrinho_lotes } = carrinho;
-    
-                const carrinhoLotes = carrinho_lotes.map((carrinhoLote: any) => {
-                    const ticket = data.find((ticket: any) => ticket.lote_id === carrinhoLote.lote_id);
-                    return {
-                        ...ticket,
-                        lote_quantidade: carrinhoLote.lote_quantidade
-                    };
-                });
-    
-                setTimerLimit(carrinho.carrinho_expiracao);
-                setTimer(carrinho.data_atual);
-                setSelectedTickets({ carrinho_lotes: carrinhoLotes });
-            }else{
-                setLoading(false);
-            }
-
         };
     
         fetchTickets();
-    
-        // No dependencies in the dependency array to prevent infinite loop
     }, []);
     
     
 
-    if (Loading) {
-        return <LoadingComponent />
-    }
+
 
     return (
         <HomeContainer theme={theme}>
-         {
-            timerLimit && timer ? <Timer expirationDate={timerLimit}  /> : null
-         }
-
+      
             <Header>
                 <div></div> {/* Espaço vazio para manter o logo centralizado */}
                 <div className="logo">
@@ -162,11 +78,11 @@ const Home: React.FC = () => {
                         <TicketTitle>{ticket.ingresso_descricao}</TicketTitle>
                         <TicketLot>{ticket.lote_descricao} - R$ {ticket.lote_preco}</TicketLot>
                         <QuantitySelect>
-                            <QuantityButton onClick={() => handleQuantityChange(ticket.lote_id, -1)}>-</QuantityButton>
+                            <QuantityButton onClick={() => handleQuantityChange(ticket.lote_id, -1, tickets)}>-</QuantityButton>
                             <QuantityDisplay>
                                 {selectedTickets.carrinho_lotes.find(lote => lote.lote_id === ticket.lote_id)?.lote_quantidade || 0}
                             </QuantityDisplay>
-                            <QuantityButton onClick={() => handleQuantityChange(ticket.lote_id, 1)}>+</QuantityButton>
+                            <QuantityButton onClick={() => handleQuantityChange(ticket.lote_id, 1, tickets)}>+</QuantityButton>
                         </QuantitySelect>
                     </Ticket>
                 ))}

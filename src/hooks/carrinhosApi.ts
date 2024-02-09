@@ -17,8 +17,6 @@ type Carrinho = {
 export const useCarrinhosApi = () => ({
     postCarrinho: async ({ carrinho_lotes }: Carrinho) => {
 
-
-
         const response = await api.post('/carrinhos', { carrinho_lotes: carrinho_lotes });
 
         return response.data;

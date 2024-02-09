@@ -9,6 +9,8 @@ import { BottomNavigation, BottomNavigationAction, Paper } from '@mui/material';
 import HomeIcon from '@mui/icons-material/Home';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import Conta from './pages/Conta/Conta';
+import { AuthProvider } from './contexts/Auth/AuthProvider';
+import { CarrinhosProvider } from './contexts/Carrinhos/CarrinhosProvider';
 import Finalizar from './pages/Finalizar/Finalizar';
 
 
@@ -25,7 +27,9 @@ function App() {
       <GlobalStyles theme={theme} />
       <Routes>
         <Route path="/" element={
-          <Home />
+          <CarrinhosProvider>
+            <Home />
+          </CarrinhosProvider>
         } />
         <Route path='/conta' element={
           <RequireAuth>
@@ -33,7 +37,11 @@ function App() {
           </RequireAuth>
         } />
         <Route path='/finalizar' element={
-          <Finalizar />
+   
+            <CarrinhosProvider>
+              <Finalizar />
+            </CarrinhosProvider>
+    
         } />
       </Routes>
       <Paper sx={{ position: 'fixed', bottom: 0, left: 0, right: 0 }} elevation={3}>

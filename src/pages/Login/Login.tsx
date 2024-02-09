@@ -23,7 +23,7 @@ const Login: React.FC = () => {
                     icon: 'success',
                     confirmButtonText: 'OK'
                 }).then(() => {
-                    navigate('/');
+                    window.location.href = '/';
                 });
 
             }).catch((error) => {

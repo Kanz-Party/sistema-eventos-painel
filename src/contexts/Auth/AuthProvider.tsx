@@ -18,15 +18,14 @@ export const AuthProvider = ({ children }: { children: JSX.Element }) => {
             if (token) {
                 const data = await api.validateToken(token);
                 if (data.estaLogado) {
+                    setUser(data.usuario);
                     setLogado(true);
                 }
             }
         }
 
         validateToken();
-    }, [api]);
-    
-
+    }, []);
 
     const signin = async (email: string, password: string) => {
         const data = await api.signin(email, password);

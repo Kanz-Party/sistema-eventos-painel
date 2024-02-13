@@ -17,6 +17,7 @@ import Timer from '../../components/Timer/Timer';
 import { useNavigate } from 'react-router-dom';
 import { useCarrinhos } from '../../contexts/Carrinhos/CarrinhosProvider';
 import { CarrinhosContext } from '../../contexts/Carrinhos/CarrinhosProvider';
+import Sidebar from '../../components/Sidebar/Sidebar';
 
 interface TicketData {
     ingresso_id: number;
@@ -54,16 +55,6 @@ const Home: React.FC = () => {
 
     return (
         <HomeContainer theme={theme}>
-      
-            <Header>
-                <div></div> {/* Espaço vazio para manter o logo centralizado */}
-                <div className="logo">
-                    <LogoStyle src={Logo} alt="Logo" />
-                </div>
-                <div className="login-button">
-                    <LoginButton>Login</LoginButton>
-                </div>
-            </Header>
             <BannerContainer background={Banner}>
                 <BannerImage src={Banner} alt="Banner" />
             </BannerContainer>

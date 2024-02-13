@@ -10,7 +10,7 @@ import { useCarrinhos } from '../../contexts/Carrinhos/CarrinhosProvider';
 import { useCarrinhosApi } from '../../hooks/carrinhosApi';
 import ResumoPedido from './ResumoPedido';
 
-initMercadoPago("TEST-6a9e6a10-797b-4a87-ba77-931187859385");
+initMercadoPago("TEST-d4c240b1-40e8-44f6-8251-bdc0b5e9c022");
 
 
 const Finalizar: React.FC = () => {

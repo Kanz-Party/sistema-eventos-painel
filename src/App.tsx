@@ -12,6 +12,8 @@ import Conta from './pages/Conta/Conta';
 import { AuthProvider } from './contexts/Auth/AuthProvider';
 import { CarrinhosProvider } from './contexts/Carrinhos/CarrinhosProvider';
 import Finalizar from './pages/Finalizar/Finalizar';
+import { Header } from './components/Header/Header';
+import ListagemIngressos from './pages/Ingressos/Ingressos';
 
 
 function App() {
@@ -25,6 +27,8 @@ function App() {
   return (
     <div className="App">
       <GlobalStyles theme={theme} />
+      <Header />
+
       <Routes>
         <Route path="/" element={
           <CarrinhosProvider>
@@ -36,27 +40,20 @@ function App() {
             <Conta />
           </RequireAuth>
         } />
+        <Route path='/ingressos' element={
+          <CarrinhosProvider>
+            <ListagemIngressos />
+          </CarrinhosProvider>
+        } />
         <Route path='/finalizar' element={
-   
-            <CarrinhosProvider>
-              <Finalizar />
-            </CarrinhosProvider>
-    
+
+          <CarrinhosProvider>
+            <Finalizar />
+          </CarrinhosProvider>
+
         } />
       </Routes>
-      <Paper sx={{ position: 'fixed', bottom: 0, left: 0, right: 0 }} elevation={3}>
-        <BottomNavigation
-          showLabels
-          value={value}
-          onChange={(event, newValue) => {
-            setValue(newValue);
-            navigate(newValue);
-          }}
-        >
-          <BottomNavigationAction label="Início" icon={<HomeIcon />} value={"/"} />
-          <BottomNavigationAction label="Conta" icon={<AccountCircleIcon />} value={"/conta"} />
-        </BottomNavigation>
-      </Paper>
+
     </div>
   );
 }

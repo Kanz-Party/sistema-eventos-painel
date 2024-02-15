@@ -14,3 +14,9 @@ export const verificaToken = async (token: string) => {
     });
     return response.data;
 }
+
+export const getUsuario = (id: number) => {
+    const response = api.get(`/usuarios/${id}`);
+    return response;
+}
+

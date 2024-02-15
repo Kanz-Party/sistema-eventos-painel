@@ -74,7 +74,9 @@ const Sidebar: React.FC = () => {
                                 <ListItemIcon>
                                     <AccountCircleIcon style={{ color: 'white' }} />
                                 </ListItemIcon>
-                                <ListItemText primary="Dados da Conta" />
+                                <Link to={'/conta'}>
+                                    <ListItemText primary="Dados da Conta" />
+                                </Link>
                             </ListItem>
                             <ListItem button style={
                                 { justifyContent: 'center', }

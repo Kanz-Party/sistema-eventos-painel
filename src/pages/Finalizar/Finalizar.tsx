@@ -9,6 +9,7 @@ import { mercadoPagoApi } from '../../hooks/mercadoPago';
 import { useCarrinhos } from '../../contexts/Carrinhos/CarrinhosProvider';
 import { useCarrinhosApi } from '../../hooks/carrinhosApi';
 import ResumoPedido from './ResumoPedido';
+import Swal from 'sweetalert2';
 
 initMercadoPago("TEST-d4c240b1-40e8-44f6-8251-bdc0b5e9c022");
 
@@ -26,20 +27,36 @@ const Finalizar: React.FC = () => {
     const [items, setItems] = useState<any[]>([]);
     const auth = useContext(AuthContext);
 
-
     useEffect(() => {
         const init = async () => {
             if (auth.logado && needInit) {
-                const data = await carrinhosApi.postCarrinho(selectedTickets);
-                setNeedInit(false);
-                if (data && data.items) {
-                    setItems(data.items);
-                    setPreferenceId(data.pagamento.pagamento_preference_id);
+                if (!selectedTickets) {
+                    window.location.href = '/';
+                    return; // Para garantir que não continue a execução após o redirecionamento
                 }
+
+
+                carrinhosApi.postCarrinho(selectedTickets).then((response) => {
+                    setPreferenceId(response.preference_id);
+                    setItems(response.items);
+                    setNeedInit(false);
+                }).catch((error) => {
+                    window.location.href = '/';
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Oops...',
+                        text: 'Erro ao finalizar a compra!',
+                    });
+                }
+                );
             }
+
+
+
         };
         init();
-    }, [auth.logado, carrinhosApi, selectedTickets]);
+    }, [auth.logado, carrinhosApi, selectedTickets, needInit]);
+
 
     if (!auth.logado) {
         return <Cadastro />
@@ -52,7 +69,7 @@ const Finalizar: React.FC = () => {
             <FinalizarContainer theme={theme}>
                 <ResumoPedido items={items} />
                 <Wallet
-                    initialization={{ preferenceId: preferenceId,redirectMode: "modal"}}
+                    initialization={{ preferenceId: preferenceId, redirectMode: "modal" }}
                     customization={{ buttonColor: "#FF0000" } as any}
                 />
             </FinalizarContainer>

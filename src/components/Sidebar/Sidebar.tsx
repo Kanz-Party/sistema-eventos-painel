@@ -76,6 +76,11 @@ const Sidebar: React.FC = () => {
                                 </ListItemIcon>
                                 <ListItemText primary="Dados da Conta" />
                             </ListItem>
+                            <ListItem button style={
+                                { justifyContent: 'center', }
+                            }>
+                                Sair
+                            </ListItem>
                         </>
                     ) : (
                         <ListItem style={

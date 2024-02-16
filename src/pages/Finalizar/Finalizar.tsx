@@ -1,17 +1,17 @@
 import React, { useContext, useEffect, useState } from 'react';
 import './styles';
 import { FinalizarContainer } from './styles';
-import { useTheme } from '../../components/contexts/Theme/ThemeContext';
-import { AuthContext } from '../../components/contexts/Auth/AuthContext';
+import { useTheme } from '../../contexts/Theme/ThemeContext';
+import { AuthContext } from '../../contexts/Auth/AuthContext';
 import Cadastro from '../Cadastro/Cadastro';
 import { initMercadoPago, Wallet } from "@mercadopago/sdk-react";
 import { mercadoPagoApi } from '../../hooks/mercadoPago';
-import { useCarrinhos } from '../../components/contexts/Carrinhos/CarrinhosProvider';
+import { useCarrinhos } from '../../contexts/Carrinhos/CarrinhosProvider';
 import { useCarrinhosApi } from '../../hooks/carrinhosApi';
 import ResumoPedido from './ResumoPedido';
 import Swal from 'sweetalert2';
 
-initMercadoPago("APP_USR-208ce83a-ed27-43ee-aff4-a8c513a2dbb0");
+initMercadoPago("TEST-d4c240b1-40e8-44f6-8251-bdc0b5e9c022");
 
 
 const Finalizar: React.FC = () => {

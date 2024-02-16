@@ -12,7 +12,7 @@ import MenuIcon from '@mui/icons-material/Menu';
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import Divider from '@mui/material/Divider';
-import { AuthContext } from '../contexts/Auth/AuthContext';
+import { AuthContext } from '../../contexts/Auth/AuthContext';
 import { Link } from 'react-router-dom';
 
 const Sidebar: React.FC = () => {

@@ -1,7 +1,7 @@
 import { AuthContext } from "./AuthContext";
 import { useState, useEffect } from "react";
-import { User } from "../../../types/User";
-import { useApi } from "../../../hooks/useApi";
+import { User } from "../../types/User";
+import { useApi } from "../../hooks/useApi";
 import { set } from "react-hook-form";
 
 

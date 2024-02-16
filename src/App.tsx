@@ -1,16 +1,16 @@
 
 import { Routes, Route, useNavigate } from 'react-router-dom';
-import { RequireAuth } from './components/contexts/Auth/RequireAuth';
+import { RequireAuth } from './contexts/Auth/RequireAuth';
 import { useState } from 'react';
 import Home from './pages/Home/Home';
 import GlobalStyles from './app_styles';
-import { useTheme } from './components/contexts/Theme/ThemeContext';
+import { useTheme } from './contexts/Theme/ThemeContext';
 import { BottomNavigation, BottomNavigationAction, Paper } from '@mui/material';
 import HomeIcon from '@mui/icons-material/Home';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import Conta from './pages/Conta/Conta';
-import { AuthProvider } from './components/contexts/Auth/AuthProvider';
-import { CarrinhosProvider } from './components/contexts/Carrinhos/CarrinhosProvider';
+import { AuthProvider } from './contexts/Auth/AuthProvider';
+import { CarrinhosProvider } from './contexts/Carrinhos/CarrinhosProvider';
 import Finalizar from './pages/Finalizar/Finalizar';
 import { Header } from './components/Header/Header';
 import ListagemIngressos from './pages/Ingressos/Ingressos';

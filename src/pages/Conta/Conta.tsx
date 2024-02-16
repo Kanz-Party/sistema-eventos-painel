@@ -6,7 +6,7 @@ import { z } from 'zod';
 import { Button, TextField, Typography, Paper, Box } from '@mui/material';
 import Swal from 'sweetalert2';
 import { getUsuario } from '../../hooks/usuarioApi';
-import { AuthContext } from '../../components/contexts/Auth/AuthContext';
+import { AuthContext } from '../../contexts/Auth/AuthContext';
 
 
 

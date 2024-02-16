@@ -1,7 +1,7 @@
 import React, { useContext, useState } from 'react';
 import { Button, TextField, Typography, Container, Paper, Box } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
-import { AuthContext } from '../../components/contexts/Auth/AuthContext';
+import { AuthContext } from '../../contexts/Auth/AuthContext';
 import Swal from 'sweetalert2';
 
 const Login: React.FC = () => {

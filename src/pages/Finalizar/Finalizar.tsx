@@ -11,7 +11,7 @@ import { useCarrinhosApi } from '../../hooks/carrinhosApi';
 import ResumoPedido from './ResumoPedido';
 import Swal from 'sweetalert2';
 
-initMercadoPago("TEST-d4c240b1-40e8-44f6-8251-bdc0b5e9c022");
+initMercadoPago("APP_USR-208ce83a-ed27-43ee-aff4-a8c513a2dbb0");
 
 
 const Finalizar: React.FC = () => {

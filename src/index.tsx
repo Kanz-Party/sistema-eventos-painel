@@ -3,8 +3,8 @@ import ReactDOM from 'react-dom/client';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { BrowserRouter } from 'react-router-dom';
-import { AuthProvider } from './contexts/Auth/AuthProvider';
-import { ThemeProvider } from './contexts/Theme/ThemeContext';
+import { AuthProvider } from './components/contexts/Auth/AuthProvider';
+import { ThemeProvider } from './components/contexts/Theme/ThemeContext';
 import GlobalFonts from './app_fonts';
 import { CssBaseline } from '@mui/material';
 

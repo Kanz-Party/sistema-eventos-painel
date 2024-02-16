@@ -6,7 +6,7 @@ import {
     TicketTitle,
     TicketLot, QuantitySelect, QuantityButton, QuantityDisplay, FinalizeButton
 } from './styles';
-import { useTheme } from '../../contexts/Theme/ThemeContext';
+import { useTheme } from '../../components/contexts/Theme/ThemeContext';
 
 import { useIngressosApi } from '../../hooks/ingressosApi';
 import Logo from '../../assets/images/logo.png';
@@ -15,8 +15,8 @@ import LoadingComponent from '../../components/Loading/Loading';
 import { useCarrinhosApi } from '../../hooks/carrinhosApi';
 import Timer from '../../components/Timer/Timer';
 import { useNavigate } from 'react-router-dom';
-import { useCarrinhos } from '../../contexts/Carrinhos/CarrinhosProvider';
-import { CarrinhosContext } from '../../contexts/Carrinhos/CarrinhosProvider';
+import { useCarrinhos } from '../../components/contexts/Carrinhos/CarrinhosProvider';
+import { CarrinhosContext } from '../../components/contexts/Carrinhos/CarrinhosProvider';
 import Sidebar from '../../components/Sidebar/Sidebar';
 
 interface TicketData {

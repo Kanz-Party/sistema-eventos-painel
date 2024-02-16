@@ -31,9 +31,22 @@ const Finalizar: React.FC = () => {
         const init = async () => {
             if (auth.logado && needInit) {
                 if (!selectedTickets) {
-                    window.location.href = '/';
-                    return; // Para garantir que não continue a execução após o redirecionamento
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Oops...',
+                        text: 'Erro ao finalizar a compra!',
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            window.location.href = '/';
+                        }
+                    });
+                    
+       
+                    return;
+
                 }
+
+
 
 
                 carrinhosApi.postCarrinho(selectedTickets).then((response) => {
@@ -41,12 +54,18 @@ const Finalizar: React.FC = () => {
                     setItems(response.items);
                     setNeedInit(false);
                 }).catch((error) => {
-                    window.location.href = '/';
                     Swal.fire({
                         icon: 'error',
                         title: 'Oops...',
                         text: 'Erro ao finalizar a compra!',
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            window.location.href = '/';
+                        }
                     });
+                    
+                    return;
+            
                 }
                 );
             }

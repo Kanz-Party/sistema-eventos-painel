@@ -34,14 +34,14 @@ export const AuthProvider = ({ children }: { children: JSX.Element }) => {
     }
 
     const signout = async () => {
-        const data = await api.logout();
 
-        if (data.status) {
-            setUser(null);
-            setToken('');
-        }
 
-        return false;
+
+        setUser(null);
+        localStorage.removeItem('token');
+
+
+        window.location.href = '/';
     }
 
     const setToken = (token: string) => {

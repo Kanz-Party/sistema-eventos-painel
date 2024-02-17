@@ -46,9 +46,6 @@ const Finalizar: React.FC = () => {
 
                 }
 
-
-
-
                 carrinhosApi.postCarrinho(selectedTickets).then((response) => {
                     setPreferenceId(response.preference_id);
                     setItems(response.items);

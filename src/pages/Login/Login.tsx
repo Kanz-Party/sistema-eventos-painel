@@ -79,6 +79,14 @@ const Login: React.FC = () => {
                         color="primary"
                         sx={{ mt: 3, mb: 2 }}
                         onClick={handleLogin}
+                        style={
+                            {
+                                color: 'black',
+                                textDecoration: 'none',
+                                backgroundColor: '#f0ce8c',
+                            }
+                        
+                        }
                     >
                         Logar
                     </Button>

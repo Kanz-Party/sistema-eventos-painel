@@ -20,3 +20,8 @@ export const getUsuario = (id: number) => {
     return response;
 }
 
+export const atualizaUsuario = (id: number, usuario: any) => {
+    const response = api.put(`/usuarios/${id}`, usuario);
+    return response;
+}
+

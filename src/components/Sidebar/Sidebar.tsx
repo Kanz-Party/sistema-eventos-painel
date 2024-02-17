@@ -33,12 +33,17 @@ const Sidebar: React.FC = () => {
         setIsOpen(open);
     };
 
+
+    const signOut = () => {
+        auth.signout();
+    };
+
     const list = () => (
         <div
             role="presentation"
             onClick={toggleDrawer(false)}
             onKeyDown={toggleDrawer(false)}
-            style={{ width: 250 }}
+            style={{ width: 250, backgroundColor: 'black', display: 'flex', flexDirection: 'column', height: '100%' }}
         >
             <List>
                 <ListItem style={{
@@ -54,7 +59,14 @@ const Sidebar: React.FC = () => {
                         }
 
                     }>
-                        <Avatar src="/path/to/your/profile/picture.jpg" />
+                        <Link to={'/conta'}>
+                            <Avatar src="/path/to/your/profile/picture.jpg" style={
+                                {
+                                    color: '#f0ce8c',
+                                }
+
+                            } />
+                        </Link>
 
                     </div>
                 </ListItem>
@@ -64,32 +76,45 @@ const Sidebar: React.FC = () => {
                         <>
                             <ListItem button>
                                 <ListItemIcon>
-                                    <TicketIcon style={{ color: 'white' }} />
+                                    <TicketIcon style={{ color: '#f0ce8c' }} />
                                 </ListItemIcon>
-                                <Link to={`/ingressos`}>
+                                <Link to={`/ingressos`} style={
+                                    {
+                                        color: 'white',
+                                        textDecoration: 'none'
+                                    }
+                                }>
                                     <ListItemText primary="Meus Ingressos" />
                                 </Link>
                             </ListItem>
                             <ListItem button>
                                 <ListItemIcon>
-                                    <AccountCircleIcon style={{ color: 'white' }} />
+                                    <AccountCircleIcon style={{ color: '#f0ce8c' }} />
                                 </ListItemIcon>
-                                <Link to={'/conta'}>
+                                <Link to={'/conta'} style={
+                                    {
+                                        color: 'white',
+                                        textDecoration: 'none'
+                                    }
+                                }>
                                     <ListItemText primary="Dados da Conta" />
                                 </Link>
                             </ListItem>
-                            <ListItem button style={
-                                { justifyContent: 'center', }
-                            }>
-                                Sair
-                            </ListItem>
+
                         </>
                     ) : (
                         <ListItem style={
                             { justifyContent: 'center', }
                         }>
                             <Link to={'/conta'}>
-                                <Button fullWidth variant="contained" color="primary">
+                                <Button fullWidth variant="contained" color="primary" style={
+                                    {
+                                        color: 'black',
+                                        textDecoration: 'none',
+                                        backgroundColor: '#f0ce8c',
+                                    }
+                                
+                                }>
                                     Login
                                 </Button>
                             </Link>
@@ -97,11 +122,24 @@ const Sidebar: React.FC = () => {
                     )
                 }
             </List>
+            <div style={{ flexGrow: 1 }}></div> {/* Espaço flexível para empurrar o item "Sair" para baixo */}
+            <Divider /> {/* Opcional: Adiciona um divisor antes do item "Sair" */}
+            <List>
+                {auth.logado ? (
+                    <ListItem button onClick={() => signOut()} style={{ justifyContent: 'center', color: 'white' }}>
+                        Sair
+                    </ListItem>
+                ) : (
+                    <ListItem style={{ justifyContent: 'center' }}>
+                        {/* Seu botão de login aqui */}
+                    </ListItem>
+                )}
+            </List>
         </div>
     );
 
     return (
-        <div>
+        <div >
             <IconButton edge="start" color="inherit" aria-label="menu" onClick={toggleDrawer(true)}>
                 <MenuIcon style={{ color: 'white' }} />
             </IconButton>
@@ -109,6 +147,12 @@ const Sidebar: React.FC = () => {
                 anchor='right'
                 open={isOpen}
                 onClose={toggleDrawer(false)}
+                sx={{
+                    '& .MuiDrawer-paper': {
+                        backgroundColor: 'black', // This targets the internal Paper component
+                        width: 250 // You can also set the width here
+                    }
+                }}
             >
                 {list()}
             </Drawer>

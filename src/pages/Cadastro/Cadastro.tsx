@@ -117,6 +117,14 @@ const Cadastro: React.FC = () => {
                         fullWidth
                         variant="contained"
                         sx={{ mt: 3, mb: 2 }}
+                        style={
+                            {
+                                color: 'black',
+                                textDecoration: 'none',
+                                backgroundColor: '#f0ce8c',
+                            }
+                        
+                        }
                     >
                         Cadastrar
                     </Button>

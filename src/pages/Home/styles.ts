@@ -27,6 +27,35 @@ const LogoStyle = styled.img`
   width: 100px;
 `;
 
+export const EventDescription = styled.div`
+    margin: 20px 0;
+    padding: 15px;
+    background-color: ${props => props.theme.backgroundColorSecondary};
+    color: ${props => props.theme.textColorSecondary};
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    font-family: 'Open Sans', sans-serif;
+    text-align: left;
+
+    h2 {
+        margin-top: 20px;
+        margin-bottom: 10px;
+        font-size: 24px;
+        color: ${props => props.theme.primaryColor};
+        font-weight: bold;
+    }
+
+    p {
+        margin-bottom: 15px;
+        line-height: 1.6;
+        font-size: 16px;
+
+        &:last-child {
+            margin-bottom: 0;
+        }
+    }
+`;
+
 const LoginButton = styled.div`
  color: white;
  cursor: pointer;

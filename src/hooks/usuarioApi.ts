@@ -25,3 +25,7 @@ export const atualizaUsuario = (id: number, usuario: any) => {
     return response;
 }
 
+export const recuperarSenha = (email: string) => {
+    const response = api.post('/usuarios/redefinir_senha_token', { email });
+    return response;
+}

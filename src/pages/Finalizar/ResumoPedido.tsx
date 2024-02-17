@@ -1,18 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
 
-type Item = {
-    id: string;
-    category_id: string;
-    currency_id: string;
-    description: string;
-    title: string;
-    quantity: number;
-    unit_price: number;
-};
-
 type PedidoProps = {
-    items: Item[];
+    items: any;
 };
 
 
@@ -51,11 +41,11 @@ const ResumoPedido: React.FC<PedidoProps> = ({ items }) => {
     return (
         <ResumoContainer>
             <Titulo>Resumo do Pedido</Titulo>
-            {items.map((item) => (
-                <ItemContainer key={item.id}>
-                    <ItemTitulo>{item.title}</ItemTitulo>
-                    <ItemDetalhes>Quantidade: {item.quantity}</ItemDetalhes>
-                    <ItemDetalhes>Preço Unitário: R$ {item.unit_price.toFixed(2)}</ItemDetalhes>
+            {items.map((item: any, index: number) => (
+                <ItemContainer key={index}>
+                    <ItemTitulo>{item.ingresso_descricao} - {item.lote_descricao}</ItemTitulo>
+                    <ItemDetalhes>Quantidade: {item.lote_quantidade}</ItemDetalhes>
+                    <ItemDetalhes>Preço Unitário: R$ {(item.lote_preco/100).toFixed(2)}</ItemDetalhes>
                 </ItemContainer>
             ))}
         </ResumoContainer>

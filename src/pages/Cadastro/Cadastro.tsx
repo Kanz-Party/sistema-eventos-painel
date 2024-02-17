@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { useForm, SubmitHandler, Controller } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
@@ -6,6 +6,8 @@ import { Button, TextField, Typography, Container, Paper, Box } from '@mui/mater
 import InputMask from 'react-input-mask';
 import { criarUsuario } from '../../hooks/usuarioApi';
 import Swal from 'sweetalert2';
+import { CarrinhoContext } from '../../contexts/Carrinho/CarrinhoContext';
+import { useNavigate } from 'react-router-dom';
 
 // Definição do esquema de validação com Zod
 const schema = z.object({
@@ -23,6 +25,7 @@ const Cadastro: React.FC = () => {
     const { control, handleSubmit, formState: { errors } } = useForm<CadastroFormData>({
         resolver: zodResolver(schema),
     });
+    const navigate = useNavigate();
 
     const onSubmit: SubmitHandler<CadastroFormData> = data => {
         criarUsuario(data)
@@ -33,9 +36,8 @@ const Cadastro: React.FC = () => {
                     icon: 'success',
                     confirmButtonText: 'OK'
                 }).then(() => {
-                    console.log(res);
                     localStorage.setItem('token', res.token);
-                    window.location.href = '/';
+                    navigate('/')
                 });
             })
             .catch((error) => {

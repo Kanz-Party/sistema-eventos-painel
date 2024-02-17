@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import './styles';
 import {
     HomeContainer, Header, LoginButton, LogoStyle, BannerContainer, BannerImage, EventSection,
@@ -7,38 +7,20 @@ import {
     TicketLot, QuantitySelect, QuantityButton, QuantityDisplay, FinalizeButton
 } from './styles';
 import { useTheme } from '../../contexts/Theme/ThemeContext';
-
 import { useIngressosApi } from '../../hooks/ingressosApi';
-import Logo from '../../assets/images/logo.png';
 import Banner from '../../assets/images/banner.jpg';
-import LoadingComponent from '../../components/Loading/Loading';
-import { useCarrinhosApi } from '../../hooks/carrinhosApi';
-import Timer from '../../components/Timer/Timer';
-import { useNavigate } from 'react-router-dom';
-import { useCarrinhos } from '../../contexts/Carrinhos/CarrinhosProvider';
-import { CarrinhosContext } from '../../contexts/Carrinhos/CarrinhosProvider';
-import Sidebar from '../../components/Sidebar/Sidebar';
+import { CarrinhoContext } from '../../contexts/Carrinho/CarrinhoContext';
+import { Button } from '@mui/material';
 
-interface TicketData {
-    ingresso_id: number;
-    lote_id: number;
-    ingresso_descricao: string;
-    lote_descricao: string;
-    lote_preco: number;
-    lote_quantidade_maxima: number;
-}
+
 
 
 const Home: React.FC = () => {
 
     const { theme } = useTheme();
 
-    const navigate = useNavigate();
-
     const ingressosApi = useIngressosApi();
-    const { selectedTickets, handleQuantityChange, finalizePurchase, loading, setLoading } = useCarrinhos();
-    const [tickets, setTickets] = useState<TicketData[]>([]);
-
+    const {setTickets, tickets, handleQuantityChange, criarCarrinho, selectedTickets, loading, setLoading} = useContext(CarrinhoContext);
 
     useEffect(() => {
         const fetchTickets = async () => {
@@ -48,10 +30,6 @@ const Home: React.FC = () => {
 
         fetchTickets();
     }, []);
-
-
-
-
 
     return (
         <HomeContainer theme={theme}>
@@ -85,7 +63,11 @@ const Home: React.FC = () => {
                         </QuantitySelect>
                     </Ticket>
                 ))}
-                <FinalizeButton theme={theme} onClick={finalizePurchase}>Finalizar Compra</FinalizeButton>
+                {loading ? (
+                    <Button variant='contained' disabled>Carregando...</Button>
+                ) : (
+                    <Button variant='contained' onClick={criarCarrinho}>Finalizar Compra</Button>
+                )}
             </TicketsContainer>
         </HomeContainer >
     )

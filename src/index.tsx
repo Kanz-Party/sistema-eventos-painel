@@ -7,21 +7,24 @@ import { AuthProvider } from './contexts/Auth/AuthProvider';
 import { ThemeProvider } from './contexts/Theme/ThemeContext';
 import GlobalFonts from './app_fonts';
 import { CssBaseline } from '@mui/material';
+import { CarrinhoProvider } from './contexts/Carrinho/CarrinhoProvider';
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
 );
 root.render(
 
-    <AuthProvider>
-      <BrowserRouter>
-        <ThemeProvider>
-          <CssBaseline />
-          <GlobalFonts />
-          <App />
-        </ThemeProvider>
-      </BrowserRouter>
-    </AuthProvider>
+    <BrowserRouter>
+      <AuthProvider>
+        <CarrinhoProvider>
+          <ThemeProvider>
+            <CssBaseline />
+            <GlobalFonts />
+            <App />
+          </ThemeProvider>
+        </CarrinhoProvider>
+      </AuthProvider>
+    </BrowserRouter>
 
 );
 

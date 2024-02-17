@@ -70,7 +70,7 @@ const EdicaoConta: React.FC = () => {
     useEffect(() => {
         const init = async () => {
 
-            getUsuario(auth.user.usuarioId).then((response) => {
+            getUsuario(auth.user.usuario_id).then((response) => {
 
                 console.log('response', response.data)
 
@@ -83,7 +83,7 @@ const EdicaoConta: React.FC = () => {
 
         init()
 
-    }, [auth?.user.usuarioId, reset]);
+    }, [auth?.user.usuario_id, reset]);
 
     useEffect(() => {
         reset({
@@ -115,7 +115,7 @@ const EdicaoConta: React.FC = () => {
             senha: data.senha,
         }
 
-        atualizaUsuario(auth.user.usuarioId, usuario).then((response) => {
+        atualizaUsuario(auth.user.usuario_id, usuario).then((response) => {
 
             Swal.fire({
                 title: 'Sucesso!',

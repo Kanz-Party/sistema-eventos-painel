@@ -3,11 +3,13 @@ import { Button, TextField, Typography, Container, Paper, Box } from '@mui/mater
 import Swal from 'sweetalert2';
 import { AuthContext } from '../../contexts/Auth/AuthContext';
 import { recuperarSenha } from '../../hooks/usuarioApi';
+import { useNavigate } from 'react-router-dom';
 
 const Login: React.FC = () => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [isRecoveringPassword, setIsRecoveringPassword] = useState(false);
+    const navigate = useNavigate();
 
     const auth = useContext(AuthContext);
 
@@ -21,7 +23,7 @@ const Login: React.FC = () => {
                     icon: 'success',
                     confirmButtonText: 'OK'
                 }).then(() => {
-                    window.location.href = '/';
+                    navigate('/');
                 });
             }).catch((error) => {
                 Swal.fire({
@@ -69,7 +71,7 @@ const Login: React.FC = () => {
                         required
                         fullWidth
                         id="email"
-                        label="Email Address"
+                        label="Email"
                         name="email"
                         autoComplete="email"
                         autoFocus
@@ -83,7 +85,7 @@ const Login: React.FC = () => {
                             required
                             fullWidth
                             name="password"
-                            label="Password"
+                            label="Senha"
                             type="password"
                             id="password"
                             autoComplete="current-password"

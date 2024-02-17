@@ -10,10 +10,10 @@ import HomeIcon from '@mui/icons-material/Home';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import Conta from './pages/Conta/Conta';
 import { AuthProvider } from './contexts/Auth/AuthProvider';
-import { CarrinhosProvider } from './contexts/Carrinhos/CarrinhosProvider';
 import Finalizar from './pages/Finalizar/Finalizar';
 import { Header } from './components/Header/Header';
 import ListagemIngressos from './pages/Ingressos/Ingressos';
+import Cadastro from './pages/Cadastro/Cadastro';
 
 
 function App() {
@@ -28,12 +28,9 @@ function App() {
     <div className="App">
       <GlobalStyles theme={theme} />
       <Header />
-
       <Routes>
         <Route path="/" element={
-          <CarrinhosProvider>
-            <Home />
-          </CarrinhosProvider>
+          <Home />
         } />
         <Route path='/conta' element={
           <RequireAuth>
@@ -41,16 +38,13 @@ function App() {
           </RequireAuth>
         } />
         <Route path='/ingressos' element={
-          <CarrinhosProvider>
-            <ListagemIngressos />
-          </CarrinhosProvider>
+          <ListagemIngressos />
         } />
-        <Route path='/finalizar' element={
-
-          <CarrinhosProvider>
-            <Finalizar />
-          </CarrinhosProvider>
-
+        <Route path='/finalizar/:carrinho_hash' element={
+          <Finalizar />
+        } />
+        <Route path='/cadastro' element={
+          <Cadastro />
         } />
       </Routes>
 

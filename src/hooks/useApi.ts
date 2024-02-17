@@ -19,6 +19,12 @@ const api = axios.create({
     },
 });
 
+api.interceptors.request.use((config) => {
+    config.headers['authorization'] = "Bearer " + localStorage.getItem("token");
+    return config;
+}, (error) => {
+    return Promise.reject(error);
+})
 
 export const useApi = () => ({
     validateToken: async (token: string) => {

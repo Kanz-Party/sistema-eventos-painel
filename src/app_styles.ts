@@ -4,7 +4,7 @@ import { ThemeType } from "./types/Theme";
 const GlobalStyles = createGlobalStyle<{theme: ThemeType}>`
 
     .App {
-        font-family: 'D-DIN';
+        font-family: 'OpenSans';
         text-align: center;
         width: 100%;
     }

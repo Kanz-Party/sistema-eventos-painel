@@ -27,6 +27,22 @@ const LogoStyle = styled.img`
   width: 100px;
 `;
 
+const BackgroundVideoContainer = styled.div`
+  position: fixed; /* Usado para fixar o vídeo em relação à viewport */
+  top: 0;
+  left: 0;
+  width: 100vw; /* 100% da largura da viewport */
+  height: 100vh; /* 100% da altura da viewport */
+  overflow: hidden;
+  z-index: -1; /* Mantém o vídeo atrás do conteúdo */
+  
+  video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Garante que o vídeo cubra todo o espaço disponível sem perder as proporções */
+  }
+`;
+
 export const EventDescription = styled.div`
     margin: 20px 0;
     padding: 15px;
@@ -34,7 +50,7 @@ export const EventDescription = styled.div`
     color: ${props => props.theme.textColorSecondary};
     border-radius: 8px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    font-family: 'Open Sans', sans-serif;
+   
     text-align: left;
 
     h2 {
@@ -101,6 +117,7 @@ const EventSection = styled.div`
 const EventTitle = styled.h2`
   color: #343a40;
   margin-bottom: 10px;
+  font-family: 'Bassunpersonaluse';
 `;
 
 const EventDetails = styled.p`
@@ -220,6 +237,7 @@ const FinalizeButton = styled.button<{ theme: ThemeType }>`
   border: none;
   border-radius: 5px;
   cursor: pointer;
+  opacity: 0.3;
 
  
 `;
@@ -229,5 +247,5 @@ export {
     HomeContainer, Header, LogoStyle, LoginButton, BannerContainer,
     BannerImage, EventSection, EventTitle, EventDetails, EventLocation,
     TicketsContainer, Ticket, TicketTitle, TicketPrice, TicketInfo,
-    PromoCodeInput, SelectTicketButton, TicketLot, BuyButton, QuantitySelect, QuantityButton, QuantityDisplay, FinalizeButton
+    PromoCodeInput, SelectTicketButton, TicketLot, BuyButton, QuantitySelect, QuantityButton, QuantityDisplay, FinalizeButton,BackgroundVideoContainer
 };

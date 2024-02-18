@@ -1,16 +1,17 @@
 import React, { useState, useEffect, useContext } from 'react';
 import './styles';
 import {
-    HomeContainer, Header, LoginButton, LogoStyle, BannerContainer, BannerImage, EventSection,
+    HomeContainer, BackgroundVideoContainer, BannerContainer, BannerImage, EventSection,
     EventTitle, EventDetails, EventLocation, TicketsContainer, Ticket,
     TicketTitle, EventDescription,
-    TicketLot, QuantitySelect, QuantityButton, QuantityDisplay, FinalizeButton
+    TicketLot, QuantitySelect, QuantityButton, QuantityDisplay
 } from './styles';
 import { useTheme } from '../../contexts/Theme/ThemeContext';
 import { useIngressosApi } from '../../hooks/ingressosApi';
 import Banner from '../../assets/images/banner.jpg';
 import { CarrinhoContext } from '../../contexts/Carrinho/CarrinhoContext';
 import { Button } from '@mui/material';
+import videoSource from './party.mp4';
 
 
 
@@ -20,7 +21,7 @@ const Home: React.FC = () => {
     const { theme } = useTheme();
 
     const ingressosApi = useIngressosApi();
-    const {setTickets, tickets, handleQuantityChange, criarCarrinho, selectedTickets, loading, setLoading} = useContext(CarrinhoContext);
+    const { setTickets, tickets, handleQuantityChange, criarCarrinho, selectedTickets, loading, setLoading } = useContext(CarrinhoContext);
 
     useEffect(() => {
         const fetchTickets = async () => {
@@ -33,11 +34,17 @@ const Home: React.FC = () => {
 
     return (
         <HomeContainer theme={theme}>
+{/*             <BackgroundVideoContainer>
+                <video autoPlay loop muted>
+                    <source src={videoSource} type="video/mp4" />
+                    Your browser does not support the video tag.
+                </video>
+            </BackgroundVideoContainer> */}
             <BannerContainer background={Banner}>
                 <BannerImage src={Banner} alt="Banner" />
             </BannerContainer>
             <EventSection>
-                <EventTitle>Kanz PARTY FIRST EDITION</EventTitle>
+                <EventTitle><span>Kanz PARTY</span> FIRST EDITION</EventTitle>
                 <EventDetails>09 mar - 2024 • 23:30 </EventDetails>
                 <EventLocation>Evento presencial em Trip Bar, Guaporé - RS</EventLocation>
             </EventSection>
@@ -69,6 +76,7 @@ const Home: React.FC = () => {
                     <Button variant='contained' onClick={criarCarrinho}>Finalizar Compra</Button>
                 )}
             </TicketsContainer>
+
         </HomeContainer >
     )
 }

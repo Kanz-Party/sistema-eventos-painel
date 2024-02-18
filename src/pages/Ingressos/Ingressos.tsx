@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import QRCode from 'qrcode.react';
-import { Container, IngressoContainer, TituloIngresso, DetalhesIngresso, PagamentoContainer, PagamentoDetalhes } from './styles'; // Ajuste o caminho de importação conforme necessário
+import { Container, IngressoContainer, TituloIngresso, DetalhesIngresso, PagamentoContainer, PagamentoDetalhes, CheckoutLink } from './styles'; // Ajuste o caminho de importação conforme necessário
 import { useCarrinhosApi } from '../../hooks/carrinhosApi';
+import { Check } from '@mui/icons-material';
 
 // Definição atualizada para refletir os novos dados
 type Ingresso = {
@@ -40,6 +41,7 @@ const ListagemIngressos: React.FC = () => {
                 return acc;
             }, {});
             setIngressosPorPagamento(agrupadosPorPagamento);
+            console.log(agrupadosPorPagamento);
         };
 
         fetchIngressos();
@@ -65,6 +67,11 @@ const ListagemIngressos: React.FC = () => {
                                     <QRCode value={ingresso.qrcode_id} />
                                 )
                             }
+                            <CheckoutLink href={ingresso.pagamento_checkout_url} target="_blank">
+                                <Check />
+                                Verificar pagamento
+                            </CheckoutLink>
+
                         </IngressoContainer>
                     ))}
                 </PagamentoContainer>

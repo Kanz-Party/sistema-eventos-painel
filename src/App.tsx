@@ -14,6 +14,7 @@ import Finalizar from './pages/Finalizar/Finalizar';
 import { Header } from './components/Header/Header';
 import ListagemIngressos from './pages/Ingressos/Ingressos';
 import Cadastro from './pages/Cadastro/Cadastro';
+import Footer from './components/Footer/Footer';
 
 
 function App() {
@@ -48,6 +49,7 @@ function App() {
         } />
       </Routes>
 
+      <Footer />
     </div>
   );
 }

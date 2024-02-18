@@ -11,7 +11,7 @@ import { useIngressosApi } from '../../hooks/ingressosApi';
 import Banner from '../../assets/images/banner.jpg';
 import { CarrinhoContext } from '../../contexts/Carrinho/CarrinhoContext';
 import { Button } from '@mui/material';
-import videoSource from './party.mp4';
+
 
 
 

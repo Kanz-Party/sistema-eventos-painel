@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import QRCode from 'qrcode.react';
-import { Container, IngressoContainer, TituloIngresso, DetalhesIngresso, PagamentoContainer, PagamentoDetalhes, CheckoutLink } from './styles'; // Ajuste o caminho de importação conforme necessário
+import { Container, IngressoContainer, TituloIngresso, DetalhesIngresso, PagamentoContainer, PagamentoDetalhes, CheckoutLink, Center } from './styles'; // Ajuste o caminho de importação conforme necessário
 import { useCarrinhosApi } from '../../hooks/carrinhosApi';
 import { Check } from '@mui/icons-material';
 
@@ -53,35 +53,55 @@ const ListagemIngressos: React.FC = () => {
                 <PagamentoContainer key={pagamentoId}>
                     <PagamentoDetalhes>Status do pagamento : {
                         ingressos[0].pagamento_status === 0 ? "Aguardando pagamento" :
-                            ingressos[0].pagamento_status === 1 ? "Pago" :
+                            ingressos[0].pagamento_status === 1 ? "Confirmado" :
                                 "Cancelado"
-                    } <br /> Expira em: {new Date(ingressos[0].pagamento_expiracao).toLocaleString()
+                    } <br /> {
+                            ingressos[0].pagamento_status === 0 && (
+                                `Expira em: ${new Date(ingressos[0].pagamento_expiracao).toLocaleString()}`
+                            )
                         }</PagamentoDetalhes>
-                    {ingressos.map((ingresso, index) => (
-                        <IngressoContainer key={index}>
-                            <TituloIngresso>{ingresso.ingresso_descricao}</TituloIngresso>
-                            <DetalhesIngresso>{ingresso.lote_descricao} - R$ {Number(ingresso.lote_preco).toFixed(2)}</DetalhesIngresso>
-                            <DetalhesIngresso>Quantidade: {ingresso.lote_quantidade}</DetalhesIngresso>
-                            {
-                                ingresso.qrcode_id && (
-                                    <QRCode value={ingresso.qrcode_id} />
-                                )
-                            }
-                            <CheckoutLink href={ingresso.pagamento_checkout_url} target="_blank">
-                                <Check />
-                                Verificar pagamento
-                            </CheckoutLink>
+                    {
 
-                        </IngressoContainer>
+                    }
+                    {ingressos.map((ingresso, index) => (
+                        <>
+                            <Center>
+                                {
+                                    (index == 0 && ingressos[0].pagamento_status === 0) && (
+                                        <CheckoutLink href={ingresso.pagamento_checkout_url} target="_blank">
+                                            <Check />
+                                            Verificar pagamento
+                                        </CheckoutLink>
+                                    )
+                                }
+                            </Center>
+                            <Center>
+                                <IngressoContainer key={index}>
+                                    <TituloIngresso>{ingresso.ingresso_descricao}</TituloIngresso>
+                                    <DetalhesIngresso>{ingresso.lote_descricao} - R$ {Number(ingresso.lote_preco).toFixed(2)}</DetalhesIngresso>
+                                    <DetalhesIngresso>Quantidade: {ingresso.lote_quantidade}</DetalhesIngresso>
+                                    {
+                                        ingresso.qrcode_id && (
+                                            <QRCode value={ingresso.qrcode_id} />
+                                        )
+                                    }
+
+
+                                </IngressoContainer>
+                            </Center>
+                        </>
                     ))}
                 </PagamentoContainer>
-            ))}
-            {Object.entries(ingressosPorPagamento).length === 0 && (
-                <div>
-                    <h2>Nenhum ingresso comprado</h2>
-                </div>
-            )}
-        </Container>
+            ))
+            }
+            {
+                Object.entries(ingressosPorPagamento).length === 0 && (
+                    <div>
+                        <h2>Nenhum ingresso comprado</h2>
+                    </div>
+                )
+            }
+        </Container >
     );
 };
 

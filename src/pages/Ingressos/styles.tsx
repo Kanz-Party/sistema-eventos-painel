@@ -14,6 +14,7 @@ export const IngressoContainer = styled.div`
   padding: 20px;
   border-radius: 10px;
   width: 300px;
+  margin: 10px 0;
   background-color: #fff; /* Fundo branco para o card */
   box-shadow: 0 4px 8px rgba(0,0,0,0.1), 0 6px 20px rgba(0,0,0,0.1); /* Sombra para efeito flutuante */
   transition: transform 0.2s; /* Animação para efeito de flutuação ao passar o mouse */
@@ -44,7 +45,6 @@ export const PagamentoContainer = styled.div`
 export const PagamentoDetalhes = styled.div`
   font-size: 16px;
   color: #333;
-  margin-bottom: 15px;
   font-weight: bold;
 `;
 
@@ -56,5 +56,10 @@ export const CheckoutLink = styled.a`
   color: #007bff;
   text-decoration: none;
   font-weight: bold;
-  margin-top: 10px;
+  margin: 15px 0;
+`;
+
+export const Center = styled.div`
+  display: flex;
+  justify-content: center;
 `;

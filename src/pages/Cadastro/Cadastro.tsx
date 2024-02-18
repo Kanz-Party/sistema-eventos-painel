@@ -54,7 +54,7 @@ const Cadastro: React.FC = () => {
 
     return (
         <Container component="main" maxWidth="xs">
-            <Paper elevation={6} sx={{ mt: 8, p: 3 }}>
+            <Paper elevation={6} sx={{ mt: 8, p: 3, mb: 8 }}>
                 <Typography component="h1" variant="h5">
                     Cadastro
                 </Typography>

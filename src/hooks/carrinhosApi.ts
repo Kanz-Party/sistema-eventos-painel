@@ -1,3 +1,4 @@
+import Swal from "sweetalert2";
 import { api } from "./useApi";
 
 
@@ -20,8 +21,26 @@ export const useCarrinhosApi = () => ({
         return response.data;
     },
     getCarrinho: async (carrinho_hash: any) => {
-        const response = await api.get(`carrinhos/carrinho/${carrinho_hash}`);
-        return response.data;
+        try {
+            const response = await api.get(`carrinhos/carrinho/${carrinho_hash}`);
+            console.log("response", response);
+            
+            return response.data;
+        } catch (error: any) {
+            console.error("Error:", error);
+            if(error.response.data.err && error.response.data.err === 'CARRINHO_EXPIRADO') {
+                Swal.fire({
+                    title: 'Carrinho Expirado',
+                    text: 'O carrinho expirou, por favor, tente novamente.',
+                    icon: 'error',
+                    confirmButtonText: 'OK'
+                }).then(() => {
+                    window.location.href = '/';
+                });
+                return;
+            }
+            throw error; 
+        }
     },
     getIngressos: async () => {
         const response = await api.get('carrinhos/ingressos/meus-ingressos');

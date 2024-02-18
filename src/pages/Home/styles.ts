@@ -95,15 +95,25 @@ const BannerContainer = styled.div<{ background: string }>`
     filter: blur(8px);
     z-index: -1;
   }
+  @media (max-width: 1024px) {
+    padding: 0;
+    &:before {
+      display: none;
+    }
+  }
 `;
 
 const BannerImage = styled.img`
-
   max-width: 50%;
   height: auto;
   position: relative;
   z-index: 1;
-  border-radius: 5%;
+  border-radius: 20px;
+  @media (max-width: 1024px) {
+    max-width: 100%;
+    border-radius: 0;
+    width: 100%;
+  }
 `;
 
 const EventSection = styled.div`
@@ -125,8 +135,8 @@ const EventDetails = styled.p`
   margin-bottom: 5px;
 `;
 
-const EventLocation = styled.p`
-  color: #007bff;
+const EventLocation = styled.p<{ theme: ThemeType }>`
+  color: ${({ theme }) => theme.colors.main};
   font-weight: bold;
 `;
 
@@ -140,15 +150,28 @@ const TicketsContainer = styled.div`
 
 const Ticket = styled.div`
   border: 1px solid #eaeaea;
-  padding: 15px;
+  padding: 25px;
+  gap: 20px;
   margin-bottom: 20px;
   border-radius: 8px;
-  display: flex;
-  justify-content: space-between;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  align-items: center;
+  justify-content: center;
+  p{
+    margin: 0;
+
+  }
+  h3{
+    margin: 0;
+  }
+  @media (max-width: 560px) {
+    grid-template-columns: 1fr;
+  }
 `;
 
-const TicketTitle = styled.h3`
-  color: #007bff;
+const TicketTitle = styled.h3<{ theme: ThemeType}>`
+  color: ${({ theme }) => theme.colors.main};
   margin-bottom: 10px;
 `;
 
@@ -171,23 +194,27 @@ const PromoCodeInput = styled.input`
   border: 1px solid #ced4da;
 `;
 
-const SelectTicketButton = styled.button`
+const SelectTicketButton = styled.button<{ theme: ThemeType }>`
   width: 100%;
   padding: 10px;
-  background-color: #007bff;
+  background-color: ${({ theme }) => theme.colors.main};
   color: white;
   border: none;
   border-radius: 5px;
   cursor: pointer;
 
   &:hover {
-    background-color: #0056b3;
+    background-color: ${({ theme }) => theme.colors.main};
   }
 `;
 
 const TicketLot = styled.p`
+  span{
+    word-break: keep-all;
+  }
   margin-bottom: 5px;
   color: #343a40;
+  
 `;
 
 const BuyButton = styled.button`
@@ -208,19 +235,20 @@ const QuantitySelect = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-bottom: 10px;
 `;
 
-const QuantityButton = styled.button`
+const QuantityButton = styled.button<{ theme: ThemeType }>`
   padding: 5px 10px;
   margin: 0 5px;
-  background-color: #007bff;
+  width: 30px;
+  height: 30px;
+  background-color: ${({ theme }) => theme.colors.main};;
   color: white;
   border: none;
-  border-radius: 5px;
+  border-radius: 10px;
 
   &:hover {
-    background-color: #0056b3;
+    background-color: ${({ theme }) => theme.colors.main};;
   }
 `;
 
@@ -232,7 +260,7 @@ const QuantityDisplay = styled.span`
 const FinalizeButton = styled.button<{ theme: ThemeType }>`
   width: 100%;
   padding: 10px;
-  background-color: ${props => props.theme.colors.brandPrimary};
+  background-color: ${props => props.theme.colors.main};
   color: white;
   border: none;
   border-radius: 5px;

@@ -84,7 +84,7 @@ export const CarrinhoProvider: React.FC<CarrinhoProviderProps> = ({
 
             if (existingTicketIndex !== -1) {
                 newQuantity = prev.carrinho_lotes[existingTicketIndex].lote_quantidade + change;
-                newQuantity = Math.max(0, Math.min(newQuantity, tickets[ticketIndex].lote_quantidade_maxima+1));
+                newQuantity = Math.max(0, Math.min(newQuantity, tickets[ticketIndex].lote_quantidade_maxima));
             }
 
             if (newQuantity <= 0) {

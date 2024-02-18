@@ -8,10 +8,11 @@ import {
 } from './styles';
 import { useTheme } from '../../contexts/Theme/ThemeContext';
 import { useIngressosApi } from '../../hooks/ingressosApi';
-import Banner from '../../assets/images/banner.jpg';
+import TicketIcon from '@mui/icons-material/ConfirmationNumber';
 import { CarrinhoContext } from '../../contexts/Carrinho/CarrinhoContext';
-import { Button } from '@mui/material';
-
+import { Button, colors } from '@mui/material';
+import Banner from '../../assets/images/banner.jpg';
+import videoSource from './party.mp4';
 
 
 
@@ -34,20 +35,58 @@ const Home: React.FC = () => {
 
     return (
         <HomeContainer theme={theme}>
-{/*             <BackgroundVideoContainer>
+            {/* <BackgroundVideoContainer>
                 <video autoPlay loop muted>
                     <source src={videoSource} type="video/mp4" />
                     Your browser does not support the video tag.
                 </video>
             </BackgroundVideoContainer> */}
-            <BannerContainer background={Banner}>
-                <BannerImage src={Banner} alt="Banner" />
+            <BannerContainer background={Banner} theme={theme}>
+                <BannerImage theme={theme} src={Banner} alt="Banner" />
             </BannerContainer>
-            <EventSection>
-                <EventTitle><span>Kanz PARTY</span> FIRST EDITION</EventTitle>
-                <EventDetails>09 mar - 2024 • 23:30 </EventDetails>
-                <EventLocation>Evento presencial em Trip Bar, Guaporé - RS</EventLocation>
+            <EventSection theme={theme}>
+                <EventTitle theme={theme}><span>Kanz Party</span> FIRST EDITION</EventTitle>
+                <EventDetails theme={theme}>09 mar - 2024 • 23:30 </EventDetails>
+                <EventLocation theme={theme}>Evento presencial em Trip Bar, Guaporé - RS</EventLocation>
             </EventSection>
+            <TicketsContainer theme={theme}>
+                {tickets.map(ticket => (
+                    <Ticket theme={theme} key={ticket.ingresso_id}>
+                        <TicketTitle theme={theme}>{ticket.ingresso_descricao}</TicketTitle>
+                        <TicketLot theme={theme}>{ticket.lote_descricao} - <span>R$&nbsp;{ticket.lote_preco.toString().replace('.', ',')}</span></TicketLot>
+                        <QuantitySelect theme={theme}>
+                            <QuantityButton theme={theme} onClick={() => handleQuantityChange(ticket.lote_id, -1, tickets)}>-</QuantityButton>
+                            <QuantityDisplay theme={theme}>
+                                {selectedTickets.carrinho_lotes.find(lote => lote.lote_id === ticket.lote_id)?.lote_quantidade || 0}
+                            </QuantityDisplay>
+                            <QuantityButton theme={theme} onClick={() => handleQuantityChange(ticket.lote_id, 1, tickets)}>+</QuantityButton>
+                        </QuantitySelect>
+                    </Ticket>
+                ))}
+                {loading ? (
+                    <Button variant='contained' disabled>Carregando...</Button>
+                ) : (
+                    <Button
+                        sx={{
+                            backgroundColor: theme.colors.main,
+                            fontSize: '16px',
+                            width: '100%',
+                            fontWeight: 'bold',
+                            fontFamily: 'OpenSans',
+                            '&:hover': {
+                                backgroundColor: theme.colors.main
+                            },
+                            '&:active': {
+                                backgroundColor: theme.colors.main
+                            }
+                        }}
+                        endIcon={<TicketIcon style={{ color: theme.colors.white }} />}
+                        variant='contained' 
+                        onClick={criarCarrinho}>
+                        Comprar Ingressos
+                    </Button>
+                )}
+            </TicketsContainer>
             <EventDescription theme={theme}>
                 <h2>O SHOW</h2>
                 <p>🌟 Preparados para uma noite inesquecível de música eletrônica? 🌌 Apresentamos a First Edition da Kanz Party, uma celebração épica que vai ficar na memória!</p>
@@ -56,26 +95,7 @@ const Home: React.FC = () => {
                 <p>🎩 Nando M – E para garantir que a noite seja verdadeiramente inesquecível, Nando M entra em cena para fechar com chave de ouro. Com beats que prometem fazer a casa tremer, ele vai manter a energia no máximo até o amanhecer! ☀</p>
                 <p>Não perca a oportunidade de ser parte da história na First Edition da Kanz Party. Venha viver uma noite de pura euforia e música eletrônica de qualidade, onde cada momento promete ser mais eletrizante que o anterior. Marque na agenda, convide os amigos e prepare-se para uma experiência única! 🎉</p>
             </EventDescription>
-            <TicketsContainer>
-                {tickets.map(ticket => (
-                    <Ticket key={ticket.ingresso_id}>
-                        <TicketTitle>{ticket.ingresso_descricao}</TicketTitle>
-                        <TicketLot>{ticket.lote_descricao} - R$ {ticket.lote_preco}</TicketLot>
-                        <QuantitySelect>
-                            <QuantityButton onClick={() => handleQuantityChange(ticket.lote_id, -1, tickets)}>-</QuantityButton>
-                            <QuantityDisplay>
-                                {selectedTickets.carrinho_lotes.find(lote => lote.lote_id === ticket.lote_id)?.lote_quantidade || 0}
-                            </QuantityDisplay>
-                            <QuantityButton onClick={() => handleQuantityChange(ticket.lote_id, 1, tickets)}>+</QuantityButton>
-                        </QuantitySelect>
-                    </Ticket>
-                ))}
-                {loading ? (
-                    <Button variant='contained' disabled>Carregando...</Button>
-                ) : (
-                    <Button variant='contained' onClick={criarCarrinho}>Finalizar Compra</Button>
-                )}
-            </TicketsContainer>
+            
 
         </HomeContainer >
     )

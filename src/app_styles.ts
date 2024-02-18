@@ -14,6 +14,7 @@ const GlobalStyles = createGlobalStyle<{theme: ThemeType}>`
 
     html,
     body {
+        font-family: 'OpenSans';
         scroll-behavior: smooth;
     }
 `;

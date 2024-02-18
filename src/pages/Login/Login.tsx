@@ -4,13 +4,15 @@ import Swal from 'sweetalert2';
 import { AuthContext } from '../../contexts/Auth/AuthContext';
 import { recuperarSenha } from '../../hooks/usuarioApi';
 import { useNavigate } from 'react-router-dom';
+import { useTheme } from '../../contexts/Theme/ThemeContext';
 
 const Login: React.FC = () => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [isRecoveringPassword, setIsRecoveringPassword] = useState(false);
     const navigate = useNavigate();
-
+    
+    const {theme} = useTheme();
     const auth = useContext(AuthContext);
 
     const handleLogin = async () => {
@@ -98,7 +100,21 @@ const Login: React.FC = () => {
                             type="button"
                             fullWidth
                             variant="contained"
-                            sx={{ mt: 3, mb: 2, color: 'black', backgroundColor: '#f0ce8c' }}
+                            sx={{
+                                mt: 3,
+                                mb: 2,
+                                backgroundColor: theme.colors.main,
+                                fontSize: '16px',
+                                width: '100%',
+                                fontWeight: 'bold',
+                                fontFamily: 'OpenSans',
+                                '&:hover': {
+                                    backgroundColor: theme.colors.main
+                                },
+                                '&:active': {
+                                    backgroundColor: theme.colors.main
+                                }
+                            }}
                             onClick={
                                 handleLogin
                             }
@@ -110,7 +126,21 @@ const Login: React.FC = () => {
                             type="button"
                             fullWidth
                             variant="contained"
-                            sx={{ mt: 3, mb: 2, color: 'black', backgroundColor: '#f0ce8c' }}
+                            sx={{
+                                mt: 3,
+                                mb: 2,
+                                backgroundColor: theme.colors.main,
+                                fontSize: '16px',
+                                width: '100%',
+                                fontWeight: 'bold',
+                                fontFamily: 'OpenSans',
+                                '&:hover': {
+                                    backgroundColor: theme.colors.main
+                                },
+                                '&:active': {
+                                    backgroundColor: theme.colors.main
+                                }
+                            }}
                             onClick={
                                 handleRecoverPassword
                             }
@@ -122,7 +152,11 @@ const Login: React.FC = () => {
                         type="button"
                         fullWidth
                         variant="text"
-                        sx={{ mt: 1, mb: 2 }}
+                        sx={{ 
+                            mt: 1, 
+                            mb: 2,
+                            color: theme.colors.main
+                        }}
                         onClick={() => setIsRecoveringPassword(!isRecoveringPassword)}
                     >
                         {isRecoveringPassword ? 'Voltar ao login' : 'Esqueci minha senha'}

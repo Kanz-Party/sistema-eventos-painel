@@ -72,7 +72,6 @@ const EdicaoConta: React.FC = () => {
 
             getUsuario(auth.user.usuario_id).then((response) => {
 
-                console.log('response', response.data)
 
                 setUser(response.data);
 

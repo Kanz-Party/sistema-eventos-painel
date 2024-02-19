@@ -7,10 +7,11 @@ import InputMask from 'react-input-mask';
 import { criarUsuario } from '../../hooks/usuarioApi';
 import Swal from 'sweetalert2';
 import { CarrinhoContext } from '../../contexts/Carrinho/CarrinhoContext';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 // Definição do esquema de validação com Zod
 const schema = z.object({
+    nome: z.string().nonempty('Nome é obrigatório'),
     email: z.string().email('E-mail inválido'),
     senha: z.string().min(6, 'Senha deve ter no mínimo 6 caracteres'),
     confirmacaoSenha: z.string(),
@@ -49,7 +50,7 @@ const Cadastro: React.FC = () => {
                     confirmButtonText: 'OK'
                 });
             });
- 
+
     };
 
     return (
@@ -59,7 +60,25 @@ const Cadastro: React.FC = () => {
                     Cadastro
                 </Typography>
                 <Box component="form" noValidate onSubmit={handleSubmit(onSubmit)} sx={{ mt: 1 }}>
-                  
+
+                    <Controller
+                        name="nome"
+                        control={control}
+                        defaultValue=""
+                        render={({ field }) => (
+                            <TextField
+                                {...field}
+                                variant="outlined"
+                                margin="normal"
+                                required
+                                fullWidth
+                                label="Nome"
+                                error={!!errors.nome}
+                                helperText={errors.nome?.message}
+                            />
+                        )}
+                    />
+
                     <Controller
                         name="email"
                         control={control}
@@ -77,7 +96,7 @@ const Cadastro: React.FC = () => {
                             />
                         )}
                     />
-             
+
                     <Controller
                         name="senha"
                         control={control}
@@ -125,11 +144,21 @@ const Cadastro: React.FC = () => {
                                 textDecoration: 'none',
                                 backgroundColor: '#f0ce8c',
                             }
-                        
+
                         }
                     >
                         Cadastrar
                     </Button>
+
+                    <Link to={'/conta'} style={
+                        {
+                            color: 'black',
+                            textDecoration: 'none',
+
+                        }
+                    }>
+                        Login
+                    </Link>
                 </Box>
             </Paper>
         </Container>

@@ -19,7 +19,7 @@ const Sidebar: React.FC = () => {
     const [isOpen, setIsOpen] = useState(false);
     const auth = React.useContext(AuthContext);
 
-    console.log(auth);
+
 
     const toggleDrawer = (open: boolean) => (event: React.KeyboardEvent | React.MouseEvent) => {
         if (

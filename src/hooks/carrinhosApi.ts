@@ -23,7 +23,6 @@ export const useCarrinhosApi = () => ({
     getCarrinho: async (carrinho_hash: any) => {
         try {
             const response = await api.get(`carrinhos/carrinho/${carrinho_hash}`);
-            console.log("response", response);
             
             return response.data;
         } catch (error: any) {

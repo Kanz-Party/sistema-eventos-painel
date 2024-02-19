@@ -41,7 +41,6 @@ const ListagemIngressos: React.FC = () => {
                 return acc;
             }, {});
             setIngressosPorPagamento(agrupadosPorPagamento);
-            console.log(agrupadosPorPagamento);
         };
 
         fetchIngressos();

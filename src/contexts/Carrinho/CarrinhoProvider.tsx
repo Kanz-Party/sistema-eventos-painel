@@ -28,7 +28,6 @@ export const CarrinhoProvider: React.FC<CarrinhoProviderProps> = ({
     const auth = useContext(AuthContext);
 
     const criarCarrinho = async () => {
-        console.log(auth.logado)
         if (!auth.logado) {
             navigate('/cadastro');
             return;

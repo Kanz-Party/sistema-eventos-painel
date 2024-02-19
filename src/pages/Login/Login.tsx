@@ -11,8 +11,8 @@ const Login: React.FC = () => {
     const [password, setPassword] = useState("");
     const [isRecoveringPassword, setIsRecoveringPassword] = useState(false);
     const navigate = useNavigate();
-    
-    const {theme} = useTheme();
+
+    const { theme } = useTheme();
     const auth = useContext(AuthContext);
 
     const handleLogin = async () => {
@@ -148,12 +148,13 @@ const Login: React.FC = () => {
                             Recuperar Senha
                         </Button>
                     )}
+
                     <Button
                         type="button"
                         fullWidth
                         variant="text"
-                        sx={{ 
-                            mt: 1, 
+                        sx={{
+                            mt: 1,
                             mb: 2,
                             color: theme.colors.main
                         }}
@@ -161,6 +162,25 @@ const Login: React.FC = () => {
                     >
                         {isRecoveringPassword ? 'Voltar ao login' : 'Esqueci minha senha'}
                     </Button>
+                    {
+                        !isRecoveringPassword && (
+                            <Button
+                                type="button"
+                                fullWidth
+                                variant="text"
+                                sx={{
+                                    mt: 1,
+                                    mb: 2,
+                                    color: theme.colors.main
+                                }}
+                                onClick={() => navigate('/cadastro')}
+                            >
+                                Criar conta
+                            </Button>
+                        )
+                    }
+
+
                 </Box>
             </Paper>
         </Container>

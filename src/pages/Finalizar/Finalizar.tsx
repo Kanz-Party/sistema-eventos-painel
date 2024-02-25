@@ -13,8 +13,8 @@ import { useLocation, useParams } from 'react-router-dom';
 import moment, { Moment } from 'moment';
 import { Skeleton } from '@mui/material';
 
-// initMercadoPago("APP_USR-208ce83a-ed27-43ee-aff4-a8c513a2dbb0"); // producao
-initMercadoPago("APP_USR-acda3fac-7f4a-42db-8035-48b8d4fb3d04"); // testes
+ initMercadoPago("APP_USR-208ce83a-ed27-43ee-aff4-a8c513a2dbb0"); // producao
+/* initMercadoPago("APP_USR-acda3fac-7f4a-42db-8035-48b8d4fb3d04"); */ // testes
 
 
 const Finalizar: React.FC = () => {

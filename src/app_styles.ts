@@ -9,6 +9,18 @@ const GlobalStyles = createGlobalStyle<{theme: ThemeType}>`
         font-family: 'OpenSans';
         text-align: center;
         width: 100%;
+        .main-container{
+            display: flex;
+            justify-content: space-between;
+            flex-direction: column;
+            width: 100%;
+            min-height: 100vh;
+        }
+        .header-and-routes{
+            display: flex;
+            flex-direction: column;
+            flex-grow: 1;
+        }
     }
 
     main {

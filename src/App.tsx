@@ -15,6 +15,7 @@ import { Header } from './components/Header/Header';
 import ListagemIngressos from './pages/Ingressos/Ingressos';
 import Cadastro from './pages/Cadastro/Cadastro';
 import Footer from './components/Footer/Footer';
+import Leitor from './pages/Leitor/Leitor';
 
 
 function App() {
@@ -28,28 +29,34 @@ function App() {
   return (
     <div className="App">
       <GlobalStyles theme={theme} />
-      <Header />
-      <Routes>
-        <Route path="/" element={
-          <Home />
-        } />
-        <Route path='/conta' element={
-          <RequireAuth>
-            <Conta />
-          </RequireAuth>
-        } />
-        <Route path='/ingressos' element={
-          <ListagemIngressos />
-        } />
-        <Route path='/finalizar/:carrinho_hash' element={
-          <Finalizar />
-        } />
-        <Route path='/cadastro' element={
-          <Cadastro />
-        } />
-      </Routes>
-
-      <Footer />
+      <div className="main-container">
+        <div className="header-and-routes">
+          <Header />
+          <Routes>
+            <Route path="/" element={
+              <Home />
+            } />
+            <Route path='/conta' element={
+              <RequireAuth>
+                <Conta />
+              </RequireAuth>
+            } />
+            <Route path='/ingressos' element={
+              <ListagemIngressos />
+            } />
+            <Route path='/finalizar/:carrinho_hash' element={
+              <Finalizar />
+            } />
+            <Route path='/cadastro' element={
+              <Cadastro />
+            } />
+            <Route path='/leitor' element={
+              <Leitor />
+            } />
+          </Routes>
+        </div>
+        <Footer />
+      </div>
     </div>
   );
 }

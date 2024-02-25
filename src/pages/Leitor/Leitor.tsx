@@ -109,11 +109,6 @@ const Leitor: React.FC<LeitorProps> = ({}) => {
         console.error(error);
     };
 
-    useEffect(() => {
-        onReadQrCode('16139')
-    }, [hash]);
-
-
     return (
         <LeitorContainer>
             {hash ? (

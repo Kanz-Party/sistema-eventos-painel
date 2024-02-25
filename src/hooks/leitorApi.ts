@@ -19,7 +19,7 @@ export const useLeitorApi = () => ({
         }
     },
 
-    entrada: async (qrcode: string, hash: string) => {
+    entrada: async (qrcode: number, hash: string) => {
         try {
             const response = await api.post(`/qrcodes/entrada/${hash}/${qrcode}`);
             return response.data;

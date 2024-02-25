@@ -12,6 +12,12 @@ const LeitorContainer = styled.div<{theme: ThemeType}>`
     .scanner-container{
         width: 100%;
     }
+    .botoes{
+        display: flex;
+        justify-content: space-around;
+        gap: 10px;
+        margin-bottom: 20px;
+    }
 `;
 
 export { 

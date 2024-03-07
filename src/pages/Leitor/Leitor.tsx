@@ -146,11 +146,6 @@ const Leitor: React.FC<LeitorProps> = ({}) => {
                             ) : (
                                 <div className="scanner-container">
                                     <QrScanner
-                                        constraints={{
-                                            facingMode: 'environment',
-                                            width: 100,
-                                            height: 100,
-                                        }}
                                         onDecode={onReadQrCode}
                                         onError={onReadError}
                                     />

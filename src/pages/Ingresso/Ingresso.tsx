@@ -47,9 +47,10 @@ const Ingresso: React.FC = () => {
                                 {
                                     zIndex: 1,
                                 }
-                            }/>
+                            } />
                         )}
                     </div>
+
                     <div className="ingresso-header">
                         <h2>Detalhes do Ingresso</h2>
                     </div>
@@ -93,12 +94,24 @@ const Ingresso: React.FC = () => {
                     }}
                 >
                     <QRCode value={ingresso.qrcode_hash} style={{ width: '80%', maxHeight: '80%', height: 'auto' }} /> {/* Ajuste para ocupar 80% do modal */}
+
                     <IconButton
                         sx={{ position: 'absolute', top: '10px', right: '10px', color: 'rgba(0, 0, 0, 0.5)' }}
                         onClick={handleCloseModal} // Fechar o modal ao clicar no botão
                     >
                         <Close />
                     </IconButton>
+                    <div className="numero" style={
+                        {
+                            fontSize: '20px',
+                            fontWeight: 'bold',
+                            color: 'black',
+                            marginTop: '20px',
+                        }
+                    
+                    }>
+                        {ingresso.qrcode_hash}
+                    </div>
                 </Box>
             </Modal>
         </>

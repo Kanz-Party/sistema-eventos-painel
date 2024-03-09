@@ -7,6 +7,62 @@ export const Container = styled.div`
   align-items: center;
   gap: 20px;
   padding: 20px 0;
+  .pedido_container{
+    width: 272px;
+    min-height: 200px;
+    border-radius: 12px;
+    background-color: #fff;
+    box-shadow: 0px 10px 31px rgba(0,0,0,0.3);
+    padding: 20px 16px 16px 16px;
+    margin-right: 30px;
+    margin-bottom: 30px;
+    .pedido{
+      display: block;
+    font-size: 18px;
+    font-weight: 600;
+    line-height: 1.38;
+    text-align: left;
+    color: #161616;
+    text-transform: uppercase;
+    }
+    .status{
+      
+        font-size: 14px;
+        text-align: left;
+      line-height: 1.5;
+      color: #99bd73;
+      font-weight: 500;
+      
+    }
+    .data{
+      font-size: 14px;
+      text-align: left;
+    line-height: 1.5;
+    color: #B1B1B1;
+    font-weight: 500;
+    }
+    .infos{
+      display: flex;
+      justify-content: space-between;
+      .quantidade,.valor_total{
+        font-size: 14px;
+    font-weight: 500;
+    text-transform: uppercase;
+    text-align: left;
+    display: block;
+    color: #484543;
+    max-width: 185px;
+    span{
+      font-size: 14px;
+      line-height: 1.5;
+      color: #B1B1B1;
+      font-weight: 500;
+    }
+      }
+      
+  }
+    }
+  }
 `;
 
 export const IngressoContainer = styled.div`

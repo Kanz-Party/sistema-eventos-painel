@@ -16,6 +16,7 @@ import ListagemIngressos from './pages/Ingressos/Ingressos';
 import Cadastro from './pages/Cadastro/Cadastro';
 import Footer from './components/Footer/Footer';
 import Leitor from './pages/Leitor/Leitor';
+import Ingresso from './pages/Ingresso/Ingresso';
 
 
 function App() {
@@ -42,8 +43,15 @@ function App() {
               </RequireAuth>
             } />
             <Route path='/ingressos' element={
-              <ListagemIngressos />
+              <RequireAuth>
+                <ListagemIngressos />
+              </RequireAuth>
             } />
+            {
+              <Route path='/ingresso/:carrinho_hash' element={
+                <Ingresso />
+              } />
+            }
             <Route path='/finalizar/:carrinho_hash' element={
               <Finalizar />
             } />

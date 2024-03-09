@@ -20,14 +20,18 @@ export const useCarrinhosApi = () => ({
         const response = await api.post('/carrinhos', { carrinho_lotes: carrinho_lotes });
         return response.data;
     },
+    getMeusCarrinhos: async () => {
+        const response = await api.get('carrinhos/carrinhos/meus-carrinhos');
+        return response.data;
+    },
     getCarrinho: async (carrinho_hash: any) => {
         try {
             const response = await api.get(`carrinhos/carrinho/${carrinho_hash}`);
-            
+
             return response.data;
         } catch (error: any) {
             console.error("Error:", error);
-            if(error.response.data.err && error.response.data.err === 'CARRINHO_EXPIRADO') {
+            if (error.response.data.err && error.response.data.err === 'CARRINHO_EXPIRADO') {
                 Swal.fire({
                     title: 'Carrinho Expirado',
                     text: 'O carrinho expirou, por favor, tente novamente.',
@@ -38,11 +42,15 @@ export const useCarrinhosApi = () => ({
                 });
                 return;
             }
-            throw error; 
+            throw error;
         }
     },
     getIngressos: async () => {
         const response = await api.get('carrinhos/ingressos/meus-ingressos');
+        return response.data;
+    },
+    getMeusQrCodes: async (id_carrinho: any) => {
+        const response = await api.get(`carrinhos/carrinho/meus-qrcodes/${id_carrinho}`);
         return response.data;
     }
 });

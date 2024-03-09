@@ -1,8 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import QRCode from 'qrcode.react';
-import { Container, IngressoContainer, TituloIngresso, DetalhesIngresso, PagamentoContainer, PagamentoDetalhes, CheckoutLink, Center } from './styles'; // Ajuste o caminho de importação conforme necessário
+import { Container } from './styles'; // Ajuste o caminho de importação conforme necessário
 import { useCarrinhosApi } from '../../hooks/carrinhosApi';
+import { Link } from 'react-router-dom';
+import { Button } from '@mui/material';
 import { Check } from '@mui/icons-material';
+import { useLocation, useParams } from 'react-router-dom';
+import moment from 'moment';
 
 // Definição atualizada para refletir os novos dados
 type Ingresso = {
@@ -30,17 +34,14 @@ type IngressosPorPagamento = {
 
 const ListagemIngressos: React.FC = () => {
     const [ingressosPorPagamento, setIngressosPorPagamento] = useState<IngressosPorPagamento>({});
+    const [carrinhos, setCarrinhos] = useState<any>([])
 
     const carrinhosApi = useCarrinhosApi();
 
     useEffect(() => {
         const fetchIngressos = async () => {
-            const data = await carrinhosApi.getIngressos();
-            const agrupadosPorPagamento: IngressosPorPagamento = data.reduce((acc: IngressosPorPagamento, ingresso: Ingresso) => {
-                (acc[ingresso.pagamento_id] = acc[ingresso.pagamento_id] || []).push(ingresso);
-                return acc;
-            }, {});
-            setIngressosPorPagamento(agrupadosPorPagamento);
+            const data = await carrinhosApi.getMeusCarrinhos();
+            setCarrinhos(data);
         };
 
         fetchIngressos();
@@ -48,58 +49,55 @@ const ListagemIngressos: React.FC = () => {
 
     return (
         <Container>
-            {Object.entries(ingressosPorPagamento).map(([pagamentoId, ingressos]) => (
-                <PagamentoContainer key={pagamentoId}>
-                    <PagamentoDetalhes>Status do pagamento : {
-                        ingressos[0].pagamento_status === 0 ? "Aguardando pagamento" :
-                            ingressos[0].pagamento_status === 1 ? "Confirmado" :
-                                "Cancelado"
-                    } <br /> {
-                            ingressos[0].pagamento_status === 0 && (
-                                `Expira em: ${new Date(ingressos[0].pagamento_expiracao).toLocaleString()}`
-                            )
-                        }</PagamentoDetalhes>
-                    {
+            {carrinhos.map((carrinho: any) => (
+                <>
+                    <div className="pedido_container">
+                        <div className="pedido">
+                            PEDIDO #{carrinho.carrinho_id}
+                        </div>
+                        <div className="status">
+                            {carrinho.pagamento_status === 1 ? 'FINALIZADO' : 'PAGAMENTO PENDENTE'}
+                        </div>
+                        <div className="data">
+                            {moment(carrinho.carrinho_data_criacao).format('DD/MM/YYYY')}
+                        </div>
 
-                    }
-                    {ingressos.map((ingresso, index) => (
-                        <>
-                            <Center>
-                                {
-                                    (index == 0 && ingressos[0].pagamento_status === 0) && (
-                                        <CheckoutLink href={ingresso.pagamento_checkout_url} target="_blank">
-                                            <Check />
-                                            Verificar pagamento
-                                        </CheckoutLink>
-                                    )
-                                }
-                            </Center>
-                            <Center>
-                                <IngressoContainer key={index}>
-                                    <TituloIngresso>{ingresso.ingresso_descricao}</TituloIngresso>
-                                    <DetalhesIngresso>{ingresso.lote_descricao} - R$ {Number(ingresso.lote_preco).toFixed(2)}</DetalhesIngresso>
-                                    <DetalhesIngresso>Quantidade: {ingresso.lote_quantidade}</DetalhesIngresso>
-                                    {
-                                        ingresso.qrcode_id && (
-                                            <QRCode value={ingresso.qrcode_id} />
-                                        )
+                        <div className="infos">
+                            <div className="quantidade">
+                                QUANTIDADE <br />
+                                <span>
+                                    {carrinho.carrinho_itens}
+                                </span>
+                            </div>
+                            <div className="valor_total">
+                                VALOR TOTAL <br />
+                                <span>{carrinho.carrinho_total}</span>
+                            </div>
+                        </div>
+                        <div className="ver_pedido">
+                            <Link to={`/ingresso/${carrinho.carrinho_id}`}>
+                                <Button
+                                    type="submit"
+                                    fullWidth
+                                    variant="contained"
+                                    sx={{ mt: 3, mb: 2 }}
+                                    style={
+                                        {
+                                            color: 'black',
+                                            textDecoration: 'none',
+                                            backgroundColor: '#f0ce8c',
+                                        }
+
                                     }
-
-
-                                </IngressoContainer>
-                            </Center>
-                        </>
-                    ))}
-                </PagamentoContainer>
-            ))
-            }
-            {
-                Object.entries(ingressosPorPagamento).length === 0 && (
-                    <div>
-                        <h2>Nenhum ingresso comprado</h2>
+                                >
+                                    Ver Pedido
+                                </Button>
+                            </Link>
+                        </div>
                     </div>
-                )
-            }
+                </>
+            ))}
+
         </Container >
     );
 };

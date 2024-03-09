@@ -4,6 +4,7 @@ import { ThemeType } from '../../types/Theme';
 const LeitorContainer = styled.div<{theme: ThemeType}>`
     width: 100%;
     height: 100%;
+    gap: 20px;
     flex-grow: 1;
     flex-direction: column;
     display: flex;

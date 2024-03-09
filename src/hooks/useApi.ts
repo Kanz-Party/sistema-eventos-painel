@@ -6,7 +6,9 @@ const isLocalhost =
     window.location.hostname === "127.0.0.1";
 
 // Definir baseURL dependendo do ambiente
-const baseURL = "http://192.168.1.44:21021/"
+const baseURL = isLocalhost
+    ? "http://localhost:21021/"
+    : "https://kanzparty.com.br/api/";
 
 const api = axios.create({
     baseURL: baseURL,

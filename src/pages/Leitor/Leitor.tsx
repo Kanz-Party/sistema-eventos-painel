@@ -4,7 +4,7 @@ import './styles'; // Import your custom styles if needed
 import { LeitorContainer } from './styles';
 import { useLeitorApi } from '../../hooks/leitorApi';
 import { set } from 'react-hook-form';
-import { QrScanner } from '@yudiel/react-qr-scanner';
+import { Scanner } from '@yudiel/react-qr-scanner';
 import Swal from 'sweetalert2';
 import ResumoIngresso from '../../components/ResumoIngresso/ResumoIngresso';
 import { ResumoIngressoLeitor } from '../../types/Ingresso';
@@ -17,6 +17,7 @@ const Leitor: React.FC<LeitorProps> = ({}) => {
     const [password, setPassword] = useState('');
     const [error, setError] = useState('');
     const [hash, setHash] = useState('');
+    const [hashManual, setHashManual] = useState('');
     const [qrcodeData, setQrcodeData] = useState<ResumoIngressoLeitor | null>(null);
     const [loading, setLoading] = useState(false);
 
@@ -58,6 +59,7 @@ const Leitor: React.FC<LeitorProps> = ({}) => {
             } else {
                 console.log(res);
                 setQrcodeData(res);
+                setHashManual('');
             }
         } else {
             await Swal.fire({
@@ -144,12 +146,35 @@ const Leitor: React.FC<LeitorProps> = ({}) => {
                                     </div>
                                 </>
                             ) : (
-                                <div className="scanner-container">
-                                    <QrScanner
-                                        onDecode={onReadQrCode}
-                                        onError={onReadError}
+                                <>
+                                    <div className="scanner-container">
+                                        <Scanner
+                                            options={{
+                                                constraints: {
+                                                    aspectRatio: 1,
+                                                    facingMode: 'environment',
+                                                }
+                                            }}
+                                            onResult={onReadQrCode}
+                                            onError={onReadError}
+                                        />
+                                    </div>
+                                    <div>
+                                        Ou digite o código manualmente
+                                    </div>
+                                    <TextField
+                                        label="Código"
+                                        value={hashManual}
+                                        onChange={(e) => setHashManual(e.target.value)}
                                     />
-                                </div>
+                                    <Button
+                                        variant="contained"
+                                        color="primary"
+                                        onClick={() => onReadQrCode(hashManual)}
+                                    >
+                                        Confirmar
+                                    </Button>
+                                </>
                             )}
                         </>
                     )}
@@ -166,14 +191,18 @@ const Leitor: React.FC<LeitorProps> = ({}) => {
                         fullWidth
                         autoComplete="off" // Prevent browser autocompletion
                     />
-                    <Button
-                        variant="contained"
-                        color="primary"
-                        style={{ marginTop: 20 }}
-                        onClick={onSubmit}
-                    >
-                        Acessar
-                    </Button>
+                    {loading ? (
+                        <Button variant='contained' disabled>Carregando...</Button>
+                    ) : (
+                        <Button
+                            variant="contained"
+                            color="primary"
+                            style={{ marginTop: 20 }}
+                            onClick={onSubmit}
+                        >
+                            Acessar
+                        </Button>
+                    )}
                 </Card>
             )}
         </LeitorContainer>

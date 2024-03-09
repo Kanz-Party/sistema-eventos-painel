@@ -49,7 +49,9 @@ function App() {
             } />
             {
               <Route path='/ingresso/:carrinho_hash' element={
-                <Ingresso />
+                <RequireAuth>
+                  <Ingresso />
+                </RequireAuth>
               } />
             }
             <Route path='/finalizar/:carrinho_hash' element={
